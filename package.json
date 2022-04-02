@@ -3,17 +3,10 @@
   "workspaces": {
     "packages": [
       "packages/*"
-    ],
-    "nohoist": [
-      "**/vue",
-      "**/vuex",
-      "**/vue-router",
-      "**/core-js",
-      "**/vue-loader"
     ]
   },
   "scripts": {
-    "bootstrap": "yarn && yarn run build:only && yarn run link",
+    "bootstrap": "npm i && npm run build:only && npm run link",
     "clean": "node scripts/scripts.js --clean",
     "dev": "lerna run watch --stream --parallel",
     "build": "lerna run build --stream --parallel",
@@ -35,20 +28,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zhangyuang/ssr.git"
+    "url": "git+https://github.com/algesthesiah/ssr.git"
   },
-  "author": "zhangyuang",
+  "author": "algesthesiah",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zhangyuang/ssr/issues"
+    "url": "https://github.com/algesthesiah/ssr/issues"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint",
+      "pre-commit": "npm run lint",
       "commit-msg": "node scripts/verifyCommit.js"
     }
   },
-  "homepage": "https://github.com/zhangyuang/ssr#readme",
+  "homepage": "https://github.com/algesthesiah/ssr#readme",
   "devDependencies": {
     "babel-eslint": "^10.0.2",
     "chalk": "^4.1.1",
