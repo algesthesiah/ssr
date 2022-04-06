@@ -31,7 +31,9 @@
   "homepage": "https://github.com/algesthesiah/cssr#readme",
   "devDependencies": {
     "@types/semver": "^7.3.9",
-    "concurrently": "^5.1.0"
+    "concurrently": "^5.1.0",
+    "rollup": "^2.70.1",
+    "vite": "^2.7.0"
   },
   "dependencies": {
     "axios": "^0.21.1",
