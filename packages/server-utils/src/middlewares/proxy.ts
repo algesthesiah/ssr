@@ -2,7 +2,6 @@ import { createProxyMiddleware } from 'http-proxy-middleware'
 export interface proxyOptions {
   express?: boolean
 }
-// @ts-expect-error
 import * as koaConnect from 'koa2-connect'
 import { judgeFramework } from '../cwd'
 import { loadConfig } from '../loadConfig'
