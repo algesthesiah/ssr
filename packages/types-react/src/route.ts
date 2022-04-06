@@ -1,6 +1,20 @@
 import { RouteComponentProps } from 'react-router-dom'
-import { ISSRContext, ISSRNestContext, ISSRMidwayContext, IConfig } from 'ssr-types'
 import { Action } from './component'
+import type { Request, Response } from 'express'
+import type { RouterContext } from 'koa-router'
+import type { ICookies, SetOption } from 'cookies'
+import {  IConfig } from '../../../types/config'
+export interface ExpressContext {
+  request: Request
+  response: Response
+}
+type IKoaContext = Omit<RouterContext, 'cookies' | 'router' | '_matchedRoute' | '_matchedRouteName'> & {
+  cookies: Omit<Partial<ICookies>, 'set'> & {
+    set?: (name: string, value?: string | null, opts?: SetOption) => IKoaContext['cookies']
+  }
+}
+export type ISSRContext<T = {}> = (ExpressContext | IKoaContext) & T
+export type ISSRNestContext<T = {}> = ExpressContext & T
 
 export interface LayoutProps {
   ctx?: ISSRContext
@@ -26,11 +40,6 @@ export interface Params<T, U> {
   routerProps?: RouteComponentProps<U>
   state?: any
 }
-export interface ParamsMidway<T, U> {
-  ctx?: ISSRMidwayContext<T>
-  routerProps?: RouteComponentProps<U>
-  state?: any
-}
 export interface ParamsNest<T, U> {
   ctx?: ISSRNestContext<T>
   routerProps?: RouteComponentProps<U>
@@ -38,7 +47,6 @@ export interface ParamsNest<T, U> {
 }
 
 export type ReactFetch<T={}, U={}> = (params: Params<T, U>) => Promise<any>
-export type ReactMidwayFetch<T={}, U={}> = (params: ParamsMidway<T, U>) => Promise<any>
 export type ReactNestFetch<T={}, U={}> = (params: ParamsNest<T, U>) => Promise<any>
 
 export type ReactESMFetch = () => Promise<{

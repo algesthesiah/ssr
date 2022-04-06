@@ -1,7 +1,7 @@
 import { join } from 'path'
-import { IConfig } from 'ssr-types'
 import { getCwd, getUserConfig, normalizeStartPath, normalizeEndPath, getFeDir, judgeFramework, loadModuleFromFramework, stringifyDefine, accessFileSync } from './cwd'
 import { coerce } from 'semver'
+import { IConfig } from '../../../types/config'
 const framework = judgeFramework()
 const loadConfig = (): IConfig => {
   const userConfig = getUserConfig()
@@ -71,7 +71,7 @@ const loadConfig = (): IConfig => {
 
   const clientLogLevel: ClientLogLevel = 'error'
 
-  const useHash = !isDev // 生产环境默认生成hash
+  const useHash = !isDev // 生产环境默认生成 hash
 
   const whiteList: RegExp[] = [/\.(css|less|sass|scss)$/, /vant.*?style/, /antd.*?(style)/, /ant-design-vue.*?(style)/, /store$/]
 
@@ -117,7 +117,7 @@ const loadConfig = (): IConfig => {
 
   const webpackDevServerConfig = Object.assign({
     stats: webpackStatsOption,
-    disableInfo: true, // 关闭webpack-dev-server 自带的server Info信息
+    disableInfo: true, // 关闭 webpack-dev-server 自带的 server Info 信息
     disableHostCheck: true,
     publicPath: devPublicPath,
     hotOnly: true,
@@ -136,13 +136,13 @@ const loadConfig = (): IConfig => {
   }, userConfig.webpackDevServerConfig)
 
   const chainBaseConfig = () => {
-    // 覆盖默认webpack配置
+    // 覆盖默认 webpack 配置
   }
   const chainClientConfig = () => {
-    // 覆盖默认 client webpack配置
+    // 覆盖默认 client webpack 配置
   }
   const chainServerConfig = () => {
-    // 覆盖默认 server webpack配置
+    // 覆盖默认 server webpack 配置
   }
 
   const manifestPath = `${normalizeEndPath(devPublicPath)}asset-manifest.json`

@@ -1,6 +1,6 @@
-import type { StyleOptions, Config } from 'ssr-types'
 import { loadConfig } from '../loadConfig'
 import { loadModuleFromFramework } from '../cwd'
+import { Config, StyleOptions } from '../../../../types'
 
 const loadModule = loadModuleFromFramework
 const setStyle = (chain: Config, reg: RegExp, options: StyleOptions) => {

@@ -1,6 +1,6 @@
 import { exec } from 'child_process'
 import { logGreen, loadConfig } from 'ssr-server-utils'
-import { Argv } from 'ssr-types'
+import { Argv } from '../../../types/yargs'
 import { getNormalizeArgv } from './utils'
 
 const spinner = require('ora')('starting ')

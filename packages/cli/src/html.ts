@@ -1,7 +1,8 @@
 // @ts-nocheck
 import { promises } from 'fs'
 import { join } from 'path'
-import { Argv } from 'ssr-types'
+import { Argv } from './types/yargs'
+
 
 const htmlStr = `
 <!DOCTYPE html>

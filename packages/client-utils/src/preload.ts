@@ -1,9 +1,7 @@
-// @ts-nocheck
-import { ReactClientESMFeRouteItem } from 'ssr-types'
 import { pathToRegexp } from 'path-to-regexp'
 import { normalizePath } from './utils'
 
-const preloadComponent = async (Routes: ReactClientESMFeRouteItem[], PrefixRouterBase?: string) => {
+const preloadComponent = async (Routes: any[], PrefixRouterBase?: string) => {
   for (const route of Routes) {
     const { component, path } = route
     let pathname = location.pathname

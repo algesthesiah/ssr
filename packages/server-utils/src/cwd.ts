@@ -2,8 +2,8 @@ import { promises, accessSync, realpathSync } from 'fs'
 import { resolve } from 'path'
 import { exec } from 'child_process'
 import { promisify } from 'util'
-import { UserConfig, Json } from 'ssr-types'
 import { coerce } from 'semver'
+import { Json, UserConfig } from '../../../types/config'
 
 const getCwd = () => {
   return resolve(process.cwd(), process.env.APP_ROOT ?? '')
@@ -23,7 +23,7 @@ const writeRoutes = async (routes: string, name?: string) => {
 }
 
 const transformConfig = async () => {
-  // serverless 发布无需安装 shelljs esbuild, 提前本地 build 好
+  // serverless 发布无需安装 shelljs esbuild，提前本地 build 好
   const { cp, mkdir } = await import('shelljs')
   const { transform } = await import('esbuild')
   const cwd = getCwd()

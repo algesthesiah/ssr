@@ -1,5 +1,5 @@
 import { exec } from 'child_process'
-import { Argv } from 'ssr-types'
+import { Argv } from '../../../types'
 import { getNormalizeArgv } from './utils'
 
 const spinner = require('ora')('building')

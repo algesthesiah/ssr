@@ -1,6 +1,6 @@
 import { join } from 'path'
 import axios from 'axios'
-import { IConfig } from 'ssr-types'
+import { IConfig } from '../../../types/config'
 import { getCwd } from './cwd'
 
 // 创建一个实例来请求，防止业务代码的 axios 设置了 defaults 配置导致获取 manifest 失败

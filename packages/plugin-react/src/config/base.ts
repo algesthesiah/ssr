@@ -1,9 +1,9 @@
 
 import { join } from 'path'
-import { Mode } from 'ssr-types'
 import { getCwd, loadConfig, getLocalNodeModules, setStyle, addImageChain, loadModuleFromFramework } from 'ssr-server-utils'
 import * as WebpackChain from 'webpack-chain'
 import * as webpack from 'webpack'
+export type Mode = 'development' | 'production'
 
 const MiniCssExtractPlugin = require(loadModuleFromFramework('mini-css-extract-plugin'))
 const WebpackBar = require('webpackbar')

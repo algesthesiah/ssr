@@ -1,8 +1,9 @@
 import { resolve } from 'path'
 import { renderToString, renderToNodeStream } from 'react-dom/server'
 import { loadConfig, getCwd, StringToStream, mergeStream2 } from 'ssr-server-utils'
-import { ISSRContext, UserConfig, ExpressContext, IConfig } from 'ssr-types'
 import type { ViteDevServer } from 'vite'
+import { UserConfig, IConfig } from '../../../types/config'
+import { ISSRContext, ExpressContext } from '../../../types/ctx'
 
 const cwd = getCwd()
 const defaultConfig = loadConfig()

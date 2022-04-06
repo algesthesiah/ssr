@@ -2,10 +2,10 @@
 import { resolve } from 'path'
 import { fork } from 'child_process'
 import * as yargs from 'yargs'
-import { Argv, IPlugin } from 'ssr-types'
 import { generateHtml } from './html'
 import { cleanOutDir } from './clean'
 import { handleEnv } from './preprocess'
+import { Argv, IPlugin } from '../../../types'
 
 const spinnerProcess = fork(resolve(__dirname, './spinner')) // 单独创建子进程跑 spinner 否则会被后续的 同步代码 block 导致 loading 暂停
 

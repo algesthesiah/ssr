@@ -1,6 +1,6 @@
 import { promises as fs } from 'fs'
 import { join } from 'path'
-import { ParseFeRouteItem } from 'ssr-types'
+import { ParseFeRouteItem } from '../../../types'
 import { getCwd, getPagesDir, getFeDir, accessFile, normalizeStartPath, writeRoutes, transformManualRoutes } from './cwd'
 import { loadConfig } from './loadConfig'
 
@@ -61,7 +61,7 @@ const parseFeRoutes = async () => {
   const prefix = getPrefix()
   const isVue = require(join(cwd, './package.json')).dependencies.vue
   if (isVite && !dynamic) {
-    throw new Error('Vite模式禁止关闭 dynamic ')
+    throw new Error('Vite 模式禁止关闭 dynamic ')
   }
   let routes = ''
   // 根据目录结构生成前端路由表
@@ -101,7 +101,7 @@ const parseFeRoutes = async () => {
     routes = `
         // The file is provisional which will be overwrite when restart
         ${store ? 'import * as store from "@/store/index.ts"' : ''}
-        export const FeRoutes = ${JSON.stringify(arr)} 
+        export const FeRoutes = ${JSON.stringify(arr)}
         export { default as Layout } from "${layoutPath}"
         export { default as App } from "${AppPath}"
         ${layoutFetch ? 'export { default as layoutFetch } from "@/components/layout/fetch.ts"' : ''}
@@ -129,7 +129,7 @@ const parseFeRoutes = async () => {
     const re = /"webpackChunkName":("(.+?)")/g
     routes = `
         // The file is provisional which will be overwrite when restart
-        export const FeRoutes = ${JSON.stringify(arr)} 
+        export const FeRoutes = ${JSON.stringify(arr)}
         ${accessReactApp ? 'export { default as App } from "@/components/layout/App.tsx"' : ''}
         ${layoutFetch ? 'export { default as layoutFetch } from "@/components/layout/fetch.ts"' : ''}
         ${accessStore ? 'export * from "@/store/index.ts"' : ''}
@@ -167,7 +167,7 @@ const renderRoutes = async (pageDir: string, pathRecord: string[], route: ParseF
     const abFolder = join(pageDir, pageFiles)
     const isDirectory = (await fs.stat(abFolder)).isDirectory()
     if (isDirectory) {
-      // 如果是文件夹则递归下去, 记录路径
+      // 如果是文件夹则递归下去，记录路径
       pathRecord.push(pageFiles)
       const childArr = await renderRoutes(abFolder, pathRecord, Object.assign({}, route))
       pathRecord.pop() // 回溯
@@ -199,7 +199,7 @@ const renderRoutes = async (pageDir: string, pathRecord: string[], route: ParseF
       }
 
       if (fetchExactMatch.length >= 2) {
-        // fetch文件数量 >=2 启用完全匹配策略 render$id => fetch$id, render => fetch
+        // fetch 文件数量 >=2 启用完全匹配策略 render$id => fetch$id, render => fetch
         const fetchPageFiles = `${pageFiles.replace('render', 'fetch').split('.')[0]}.ts`
         if (fetchExactMatch.includes(fetchPageFiles)) {
           route.fetch = `${aliasPath}/${fetchPageFiles}`

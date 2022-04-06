@@ -1,4 +1,4 @@
-import { Argv } from 'ssr-types'
+import { Argv } from '../../../types/yargs'
 
 export const handleEnv = async (argv: Argv) => {
   process.env.BUILD_TOOL = argv.vite ? 'vite' : 'webpack'

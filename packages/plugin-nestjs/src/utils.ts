@@ -1,4 +1,4 @@
-import { Argv } from 'ssr-types'
+import { Argv } from "../../../types/yargs"
 
 const getNormalizeArgv = (argv: Argv, options: {
   singleDash?: string[]
