@@ -4,7 +4,6 @@ import { proxyOptions } from 'ssr-types'
 import * as koaConnect from 'koa2-connect'
 import { judgeFramework } from '../cwd'
 import { loadConfig } from '../loadConfig'
-
 function onProxyReq (proxyReq: any, req: any) {
   Object.keys(req.headers).forEach(function (key) {
     proxyReq.setHeader(key, req.headers[key])
@@ -20,7 +19,7 @@ const getDevProxyMiddlewaresArr = async (options?: proxyOptions) => {
   function registerProxy (proxy: any) {
     for (const path in proxy) {
       const options = proxy[path]
-      // 如果底层服务端框架是基于 express的。则不需要用 koaConnect 转换为 koa 中间件
+      // 如果底层服务端框架是基于 express 的。则不需要用 koaConnect 转换为 koa 中间件
       const middleware = express ? createProxyMiddleware(path, options) : kc(createProxyMiddleware(path, options))
       proxyMiddlewaresArr.push(middleware)
     }

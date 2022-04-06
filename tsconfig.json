@@ -4,7 +4,7 @@
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "inlineSourceMap":true,
+    "inlineSourceMap": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "stripInternal": true,
@@ -16,11 +16,9 @@
     "lib": ["ES2020", "DOM"],
     "skipLibCheck": true
   },
-  "exclude": [
-    "node_modules",
-    "esm",
-    "cjs",
-    "**/*.test.ts",
-    "example"
-  ]
+  "include": [
+    "packages/global.d.ts",
+    "packages/*/src",
+  ],
+  "exclude": ["node_modules", "esm", "cjs", "**/*.test.ts", "example"]
 }

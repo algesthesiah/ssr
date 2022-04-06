@@ -1,24 +1,21 @@
 module.exports = {
   root: true,
-  extends: [
-    'standard-vue-ts',
-    'standard-react-ts'
-  ],
+  extends: ['./node_modules/eslint-plugin-airbnb-react'],
   globals: {
-    context: true,
-    beforeEach: true,
-    afterEach: true,
-    Cypress: true,
-    cy: true,
-    expect: true,
-    it: true,
-    describe: true
+    React: false,
   },
-  rules: {
-    '@typescript-eslint/dot-notation': ['off'],
-    'padded-blocks': ['off'],
-    '@typescript-eslint/no-base-to-string': ['off'],
-    '@typescript-eslint/restrict-plus-operands': ['off'],
-    'react-hooks/rules-of-hooks': ['off']
-  }
+  settings: {
+    'react': {
+      version: 'detect',
+    },
+    'import/resolver': {
+      typescript: {},
+      alias: {
+        map: [],
+        extensions: ['.ts', '.tsx', '.js', '.jsx'],
+      },
+    },
+    'import/order': ['error'],
+  },
+  rules: {},
 }
