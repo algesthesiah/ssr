@@ -1,5 +1,5 @@
 {
-  "name": "ssr-core-react",
+  "name": "cssr-core-react",
   "version": "6.2.4",
   "description": "react core for react/vue2/vue3 ssr deploy on serverless or tradtional web server",
   "main": "./cjs/index.js",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zhangyuang/ssr.git"
+    "url": "git+https://github.com/algesthesiah/cssr.git"
   },
   "keywords": [
     "cli",
@@ -22,21 +22,22 @@
     "react",
     "vue"
   ],
-  "author": "zhangyuang",
+  "author": "algesthesiah",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zhangyuang/ssr/issues"
+    "url": "https://github.com/algesthesiah/cssr/issues"
   },
   "engines": {
     "node": ">=16.14.2"
   },
-  "homepage": "https://github.com/zhangyuang/ssr#readme",
+  "homepage": "https://github.com/algesthesiah/cssr#readme",
   "dependencies": {
+    "cssr-server-utils": "^6.2.4",
     "react-dom": "^17.0.0",
-    "serialize-javascript": "^6.0.0",
-    "ssr-server-utils": "^6.2.4"
+    "serialize-javascript": "^6.0.0"
   },
   "devDependencies": {
-    "@types/react-dom": "^17.0.0"
+    "@types/react-dom": "^17.0.0",
+    "vite": "^2.7.0"
   }
 }

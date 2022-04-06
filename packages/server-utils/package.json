@@ -1,5 +1,5 @@
 {
-  "name": "ssr-server-utils",
+  "name": "cssr-server-utils",
   "version": "6.2.4",
   "description": "utils for serverless ssr",
   "main": "./cjs/index.js",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zhangyuang/ssr.git"
+    "url": "git+https://github.com/algesthesiah/cssr.git"
   },
   "keywords": [
     "cli",
@@ -23,12 +23,12 @@
     "react",
     "vue"
   ],
-  "author": "zhangyuang",
+  "author": "algesthesiah",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zhangyuang/ssr/issues"
+    "url": "https://github.com/algesthesiah/cssr/issues"
   },
-  "homepage": "https://github.com/zhangyuang/ssr#readme",
+  "homepage": "https://github.com/algesthesiah/cssr#readme",
   "devDependencies": {
     "@types/semver": "^7.3.9",
     "concurrently": "^5.1.0"

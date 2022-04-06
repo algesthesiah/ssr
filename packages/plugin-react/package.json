@@ -1,7 +1,7 @@
 {
-  "name": "ssr-plugin-react",
+  "name": "cssr-plugin-react",
   "version": "6.2.4",
-  "description": "plugin-react for ssr",
+  "description": "plugin-react for cssr",
   "main": "./cjs/index.js",
   "module": "./esm/index.js",
   "sideEffects": false,
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zhangyuang/ssr.git"
+    "url": "git+https://github.com/algesthesiah/cssr.git"
   },
   "keywords": [
     "cli",
@@ -22,12 +22,12 @@
     "react",
     "vue"
   ],
-  "author": "zhangyuang",
+  "author": "algesthesiah",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zhangyuang/ssr/issues"
+    "url": "https://github.com/algesthesiah/cssr/issues"
   },
-  "homepage": "https://github.com/zhangyuang/ssr#readme",
+  "homepage": "https://github.com/algesthesiah/cssr#readme",
   "dependencies": {
     "@babel/core": "^7.0.0",
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.16.5",
@@ -55,10 +55,8 @@
     "postcss-safe-parser": "^6.0.0",
     "react-dev-utils": "^11.0.4",
     "serialize-javascript": "^6.0.0",
-    "ssr-client-utils": "^6.2.3",
-    "ssr-hoc-react": "^6.2.3",
-    "ssr-server-utils": "^6.2.4",
-    "ssr-webpack": "^6.2.4",
+    "cssrreact": "^6.2.3",
+    "cssr-server-utils": "^6.2.4",
     "terser-webpack-plugin": "^2.3.5",
     "url-loader": "^4.1.1",
     "vite": "^2.7.0",
@@ -76,6 +74,6 @@
     "@types/react-router-dom": "^5.1.3",
     "@types/webpack": "^4.41.10",
     "concurrently": "^5.1.0",
-    "ssr-types-react": "^6.2.3"
+    "cssr-types-react": "^6.2.3"
   }
 }

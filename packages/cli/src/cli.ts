@@ -19,7 +19,7 @@ const spinner = {
 }
 
 const startOrBuild = async (argv: Argv, type: 'start' | 'build') => {
-  const { copyReactContext, judgeFramework, judgeServerFramework } = await import('ssr-server-utils')
+  const { copyReactContext, judgeFramework, judgeServerFramework } = await import('cssr-server-utils')
   const framework = judgeFramework()
   const serverFramework = judgeServerFramework()
   if (!argv.api) {
@@ -48,7 +48,7 @@ const startFunc = async (argv: Argv) => {
   if (!argv.noclean) {
     await cleanOutDir()
   }
-  const { parseFeRoutes, transformConfig } = await import('ssr-server-utils')
+  const { parseFeRoutes, transformConfig } = await import('cssr-server-utils')
   await transformConfig()
   await handleEnv(argv)
   await parseFeRoutes()
@@ -62,7 +62,7 @@ const buildFunc = async (argv: Argv) => {
   if (!argv.noclean) {
     await cleanOutDir()
   }
-  const { parseFeRoutes, transformConfig } = await import('ssr-server-utils')
+  const { parseFeRoutes, transformConfig } = await import('cssr-server-utils')
   await transformConfig()
   await handleEnv(argv)
   await parseFeRoutes()
@@ -72,7 +72,7 @@ const buildFunc = async (argv: Argv) => {
 
 const deployFunc = async (argv: Argv) => {
   process.env.NODE_ENV = 'production'
-  const { judgeServerFramework } = await import('ssr-server-utils')
+  const { judgeServerFramework } = await import('cssr-server-utils')
   const serverFramework = judgeServerFramework()
   const { serverPlugin } = await import(serverFramework)
   const server: IPlugin['serverPlugin'] = serverPlugin()

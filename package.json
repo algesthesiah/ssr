@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/algesthesiah/ssr.git"
+    "url": "git+https://github.com/algesthesiah/cssr.git"
   },
   "author": "algesthesiah",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/algesthesiah/ssr/issues"
+    "url": "https://github.com/algesthesiah/cssr/issues"
   },
-  "homepage": "https://github.com/algesthesiah/ssr#readme",
+  "homepage": "https://github.com/algesthesiah/cssr#readme",
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",
     "@commitlint/config-conventional": "^16.2.1",

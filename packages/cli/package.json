@@ -1,5 +1,5 @@
 {
-  "name": "ssr",
+  "name": "cssr-cli",
   "version": "6.2.4",
   "description": "cli for react/vue2/vue3 ssr deploy on serverless or tradtional web server",
   "main": "./cjs/index.js",
@@ -12,11 +12,11 @@
     "watch:cjs": "tsc -w -p ./tsconfig.cjs.json"
   },
   "bin": {
-    "ssr": "./cjs/cli.js"
+    "cssr": "./cjs/cli.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zhangyuang/ssr.git"
+    "url": "git+https://github.com/algesthesiah/cssr.git"
   },
   "keywords": [
     "cli",
@@ -25,17 +25,17 @@
     "react",
     "vue"
   ],
-  "author": "zhangyuang",
+  "author": "algesthesiah",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zhangyuang/ssr/issues"
+    "url": "https://github.com/algesthesiah/cssr/issues"
   },
-  "homepage": "https://github.com/zhangyuang/ssr#readme",
+  "homepage": "https://github.com/algesthesiah/cssr#readme",
   "dependencies": {
     "esbuild": "^0.13.14",
     "ora": "^4.0.4",
     "shelljs": "^0.8.3",
-    "ssr-server-utils": "^6.2.4",
+    "cssr-server-utils": "^6.2.4",
     "yargs": "^13.2.4"
   },
   "engines": {

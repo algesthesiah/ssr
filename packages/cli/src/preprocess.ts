@@ -12,7 +12,7 @@ export const handleEnv = async (argv: Argv) => {
     process.env.LEGACY_VITE = '1'
   }
   process.env.SERVER_PORT = argv.port ? String(argv.port) : '3000'
-  const { loadConfig } = await import('ssr-server-utils')
+  const { loadConfig } = await import('cssr-server-utils')
   const { https, isDev } = loadConfig()
   if (!!https && isDev) {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'

@@ -1,5 +1,5 @@
 {
-  "name": "ssr-types-react",
+  "name": "cssr-types-react",
   "version": "6.2.3",
   "description": "types for react ssr",
   "main": "./cjs/index.js",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zhangyuang/ssr.git"
+    "url": "git+https://github.com/algesthesiah/cssr.git"
   },
   "keywords": [
     "cli",
@@ -21,12 +21,12 @@
     "react",
     "vue"
   ],
-  "author": "zhangyuang",
+  "author": "algesthesiah",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zhangyuang/ssr/issues"
+    "url": "https://github.com/algesthesiah/cssr/issues"
   },
-  "homepage": "https://github.com/zhangyuang/ssr#readme",
+  "homepage": "https://github.com/algesthesiah/cssr#readme",
   "dependencies": {
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
