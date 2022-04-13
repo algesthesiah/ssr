@@ -34,6 +34,7 @@ const chunkNamePlugin = function (): Plugin {
           code: str.toString()
         }
       }
+      return null
     }
   }
 }

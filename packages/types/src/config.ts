@@ -1,12 +1,8 @@
-import { Options, RuleSetCondition } from 'webpack'
+import { RuleSetCondition, Options } from 'webpack'
 import * as Config from 'webpack-chain'
 import type { RollupBabelInputPluginOptions } from '@rollup/plugin-babel'
 import { Argv } from './yargs'
 import { ISSRContext } from './ctx'
-
-export {
-  Config
-}
 export type Script = Array<{
   describe?: object | {
     attrs: object
@@ -41,7 +37,8 @@ export interface IConfig {
       less?: any // both vite and webpack
       sass?: any // only webpack
       scss?: any // only vite
-      postcss?: { // both vite and webpack
+      postcss?: {
+        // both vite and webpack
         options: any
         plugins: any[]
       }
@@ -91,7 +88,7 @@ export interface IConfig {
   supportOptinalChaining: boolean
   viteConfig?: () => {
     common?: {
-    // 双端通用插件
+      // 双端通用插件
       extraPlugin?: any[]
     }
     client?: {

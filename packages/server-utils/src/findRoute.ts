@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { pathToRegexp } from 'path-to-regexp'
 
 const cache = {}
@@ -63,7 +62,7 @@ function matchPath (pathname, options = {}) {
 }
 
 function findRoute<T extends {path: string}> (Routes: T[], path: string): T {
-  // 根据请求的path来匹配到对应的Component
+  // 根据请求的 path 来匹配到对应的 Component
   const route = Routes.find(route => matchPath(path, route) && matchPath(path, route).isExact)
   return route
 }

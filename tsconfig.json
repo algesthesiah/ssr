@@ -1,9 +1,12 @@
 {
   "compilerOptions": {
-    "outDir": "dist",
-    "module": "commonjs",
+    "module": "esnext",
     "target": "es5",
-    "lib": ["esnext", "dom"],
+    "lib":  [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "baseUrl": ".",
     "jsx": "react",
     "resolveJsonModule": true,
@@ -20,7 +23,7 @@
     "declaration": true
   },
   "include": [
-    "packages/*/*"
+    "./packages/**/*"
   ],
   "exclude": [
     "node_modules",

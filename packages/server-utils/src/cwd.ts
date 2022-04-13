@@ -3,7 +3,7 @@ import { resolve } from 'path'
 import { exec } from 'child_process'
 import { promisify } from 'util'
 import { coerce } from 'semver'
-import { Json, UserConfig } from '../../../types/config'
+import { UserConfig } from '../../../types/config'
 
 const getCwd = () => {
   return resolve(process.cwd(), process.env.APP_ROOT ?? '')

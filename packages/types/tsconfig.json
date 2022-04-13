@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "suppressImplicitAnyIndexErrors": true,
+    "noImplicitAny": false,
+    "noImplicitThis": false,
+    "rootDir": "./"
+  },
+  "include": ["src/*.ts"]
+}
