@@ -106,3 +106,4 @@ e2e/videos
 .rollup.cache
 lib
 es
+tsconfig.tsbuildinfo
