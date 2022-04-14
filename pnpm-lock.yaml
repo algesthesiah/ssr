@@ -22,7 +22,7 @@ importers:
     specifiers:
       '@types/semver': ^7.3.9
       axios: ^0.21.1
-      cssr-types: workspace:1.0.1
+      cssr-types: workspace:1.0.2
       es-module-lexer: ^0.9.3
       esbuild: ^0.14.36
       http-proxy-middleware: ^1.0.6
