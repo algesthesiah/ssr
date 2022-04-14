@@ -4,8 +4,8 @@ import type { RollupBabelInputPluginOptions } from '@rollup/plugin-babel';
 import { Argv } from './yargs';
 import { ISSRContext } from './ctx';
 export declare type Script = Array<{
-    describe?: object | {
-        attrs: object;
+    describe?: any | {
+        attrs: any;
     };
     content?: string;
 }>;
@@ -64,8 +64,8 @@ export interface IConfig {
     ssrVueLoaderOptions?: any;
     csrVueLoaderOptions?: any;
     corejs?: boolean;
-    corejsOptions?: Object;
-    https: boolean | object;
+    corejsOptions?: Record<string, any>;
+    https: boolean | Record<string, any>;
     babelExtraModule?: RuleSetCondition;
     routerPriority?: Record<string, number>;
     routerOptimize?: {

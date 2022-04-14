@@ -1,12 +1,12 @@
 import { join } from 'path'
 import axios from 'axios'
-import { IConfig } from '../../../types/config'
+import type { IConfig } from 'cssr-types'
 import { getCwd } from './cwd'
 
 // 创建一个实例来请求，防止业务代码的 axios 设置了 defaults 配置导致获取 manifest 失败
 const instance = axios.create({
   timeout: 3000,
-  proxy: false
+  proxy: false,
 })
 
 const getManifest = async (config: IConfig): Promise<Record<string, string>> => {
@@ -24,6 +24,4 @@ const getManifest = async (config: IConfig): Promise<Record<string, string>> => 
   return manifest
 }
 
-export {
-  getManifest
-}
+export { getManifest }

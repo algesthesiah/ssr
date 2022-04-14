@@ -19,11 +19,11 @@ const asyncChunkMapJSON: Record<string, string[]> = {}
 const chunkNamePlugin = function (): Plugin {
   return {
     name: 'chunkNamePlugin',
-    transform (source, id) {
+    transform(source, id) {
       if (id.includes('ssr-declare-routes') || id.includes('ssr-manual-routes')) {
         let str = new MagicString(source)
         const imports = parseImports(source)[0]
-        for (let index = 0; index < imports.length; index++) {
+        for (let index = 0; index < imports.length; index += 1) {
           const { s: start, e: end } = imports[index]
           const rawUrl = source.slice(start, end)
           if (!rawUrl.includes('render')) continue
@@ -31,18 +31,18 @@ const chunkNamePlugin = function (): Plugin {
           str = str.appendRight(end - 1, `?chunkName=${chunkName}`)
         }
         return {
-          code: str.toString()
+          code: str.toString(),
         }
       }
       return null
-    }
+    },
   }
 }
 
 const asyncOptimizeChunkPlugin = (): Plugin => {
   return {
     name: 'asyncOptimizeChunkPlugin',
-    moduleParsed (this, info) {
+    moduleParsed(this, info) {
       const { id } = info
       if (id.includes('chunkName')) {
         const { importedIds, dynamicallyImportedIds } = info
@@ -64,8 +64,7 @@ const asyncOptimizeChunkPlugin = (): Plugin => {
           originAsyncChunkMap[importerId] = originAsyncChunkMap[importerId].concat(originAsyncChunkMap[id])
         }
       }
-
-    }
+    },
   }
 }
 const manifestPlugin = (): Plugin => {
@@ -73,39 +72,26 @@ const manifestPlugin = (): Plugin => {
   const { clientOutPut } = getOutput()
   return {
     name: 'manifestPlugin',
-    async generateBundle (_, bundles) {
+    async generateBundle(_, bundles) {
       const manifest: Record<string, string> = {}
+      // eslint-disable-next-line guard-for-in
       for (const bundle in bundles) {
         const val = bundle
-        const arr = bundle.split('.')
+        const arr = bundle?.split('.')
         arr.splice(1, 2)
         manifest[arr.join('.')] = `${getOutputPublicPath()}${val}`
       }
       await promises.writeFile(resolve(clientOutPut, './asset-manifest.json'), JSON.stringify(manifest))
       await promises.writeFile(resolve(getCwd(), './build/asyncChunkMap.json'), JSON.stringify(asyncChunkMapJSON))
+      // eslint-disable-next-line guard-for-in
       for (const i in originAsyncChunkMap) {
         originAsyncChunkMap[i] = Array.from(new Set(originAsyncChunkMap[i]))
       }
-      await promises.writeFile(resolve(getCwd(), './build/originAsyncChunkMap.json'), JSON.stringify(originAsyncChunkMap))
-    }
-  }
-}
-// const vendorList = ['vue', 'vuex', 'vue-router', 'react', 'react-router', 'react-dom', '@vue']
-// const re = /node_modules(\\|\/)(.*?)(\1)/
-const rollupOutputOptions: OutputOptions = {
-  entryFileNames: 'Page.[hash].chunk.js',
-  chunkFileNames: '[name].[hash].chunk.js',
-  assetFileNames: (assetInfo) => {
-    if (assetInfo.name?.includes('client-entry')) {
-      return 'Page.[hash].chunk.[ext]'
-    }
-    if (assetInfo.name && (imageRegExp.test(assetInfo.name) || fontRegExp.test(assetInfo.name))) {
-      return 'assets/[name].[hash].[ext]'
-    }
-    return '[name].[hash].chunk.[ext]'
-  },
-  manualChunks: (id: string) => {
-    return manualChunksFn(id)
+      await promises.writeFile(
+        resolve(getCwd(), './build/originAsyncChunkMap.json'),
+        JSON.stringify(originAsyncChunkMap)
+      )
+    },
   }
 }
 const manualChunksFn = (id: string) => {
@@ -120,10 +106,31 @@ const manualChunksFn = (id: string) => {
     if (arr.length === 1) {
       return arr[0]
     } else if (arr.length >= 2) {
-      return cryptoAsyncChunkName(arr.map(item => ({ name: item })), asyncChunkMapJSON)
+      return cryptoAsyncChunkName(
+        arr.map(item => ({ name: item })),
+        asyncChunkMapJSON
+      )
     }
   }
+  return null
 }
+const rollupOutputOptions: OutputOptions = {
+  entryFileNames: 'Page.[hash].chunk.js',
+  chunkFileNames: '[name].[hash].chunk.js',
+  assetFileNames: assetInfo => {
+    if (assetInfo.name?.includes('client-entry')) {
+      return 'Page.[hash].chunk.[ext]'
+    }
+    if (assetInfo.name && (imageRegExp.test(assetInfo.name) || fontRegExp.test(assetInfo.name))) {
+      return 'assets/[name].[hash].[ext]'
+    }
+    return '[name].[hash].chunk.[ext]'
+  },
+  manualChunks: (id: string) => {
+    return manualChunksFn(id)
+  },
+}
+
 type SSR = 'ssr'
 const commonConfig = (): UserConfig => {
   const { whiteList, alias, css } = loadConfig()
@@ -131,33 +138,27 @@ const commonConfig = (): UserConfig => {
     root: cwd,
     mode: 'development',
     server: {
-      middlewareMode: 'ssr' as SSR
+      middlewareMode: 'ssr' as SSR,
     },
     css: {
       postcss: css?.().loaderOptions?.postcss ?? {},
       preprocessorOptions: {
         less: {
           javascriptEnabled: true,
-          ...css?.().loaderOptions?.less
+          ...css?.().loaderOptions?.less,
         },
-        scss: css?.().loaderOptions?.scss ?? {}
-      }
+        scss: css?.().loaderOptions?.scss ?? {},
+      },
     },
     // @ts-expect-error
     ssr: {
       external: ['serialize-javascript', 'ssr-server-utils'],
-      noExternal: whiteList
+      noExternal: whiteList,
     },
     resolve: {
-      alias: alias,
-      extensions: ['.mjs', '.ts', '.jsx', '.tsx', '.json', '.vue', '.js']
-    }
+      alias,
+      extensions: ['.mjs', '.ts', '.jsx', '.tsx', '.json', '.vue', '.js'],
+    },
   }
 }
-export {
-  chunkNamePlugin,
-  manifestPlugin,
-  rollupOutputOptions,
-  commonConfig,
-  asyncOptimizeChunkPlugin
-}
+export { chunkNamePlugin, manifestPlugin, rollupOutputOptions, commonConfig, asyncOptimizeChunkPlugin }

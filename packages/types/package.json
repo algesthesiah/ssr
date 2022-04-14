@@ -1,11 +1,12 @@
 {
   "name": "cssr-types",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "types for cssr",
   "main": "./lib/index.js",
   "module": "./es/index.js",
+  "types": "./lib/src/index.d.ts",
   "scripts": {
-    "build": "rollup -c"
+    "build": "rimraf es && rimraf lib&&rollup -c"
   },
   "repository": {
     "type": "git",
@@ -33,13 +34,15 @@
     "@types/tapable": "^1.0.6",
     "@types/webpack": "^4.41.10",
     "@types/yargs": "^13.0.4",
-    "webpack-chain": "^6.4.0"
+    "webpack-chain": "^6.4.0",
+    "yargs": "^17.4.1"
   },
   "devDependencies": {
     "@rollup/plugin-alias": "^3.1.5",
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-commonjs": "^20.0.0",
     "@rollup/plugin-node-resolve": "^13.0.4",
+    "rimraf": "^3.0.2",
     "rollup": "^2.55.1",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-copy": "^3.4.0",

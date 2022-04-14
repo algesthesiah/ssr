@@ -103,3 +103,6 @@ cypress
 e2e/screenshots
 
 e2e/videos
+.rollup.cache
+lib
+es

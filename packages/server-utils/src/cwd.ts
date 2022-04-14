@@ -1,9 +1,11 @@
+/* eslint-disable */
+
 import { promises, accessSync, realpathSync } from 'fs'
 import { resolve } from 'path'
 import { exec } from 'child_process'
 import { promisify } from 'util'
 import { coerce } from 'semver'
-import { UserConfig } from '../../../types/config'
+import type { UserConfig } from 'cssr-types'
 
 const getCwd = () => {
   return resolve(process.cwd(), process.env.APP_ROOT ?? '')
@@ -27,7 +29,7 @@ const transformConfig = async () => {
   const { cp, mkdir } = await import('shelljs')
   const { transform } = await import('esbuild')
   const cwd = getCwd()
-  if (!await accessFile(resolve(cwd, './build'))) {
+  if (!(await accessFile(resolve(cwd, './build')))) {
     mkdir(resolve(cwd, './build'))
   }
   if (await accessFile(resolve(cwd, './config.js'))) {
@@ -39,7 +41,7 @@ const transformConfig = async () => {
     const { code } = await transform(fileContent, {
       loader: 'ts',
       format: 'cjs',
-      keepNames: true
+      keepNames: true,
     })
     await promises.writeFile(resolve(cwd, './build/config.js'), code)
   }
@@ -49,14 +51,16 @@ const transformManualRoutes = async () => {
   const { transform } = await import('esbuild')
   const declaretiveRoutes = await accessFile(resolve(getFeDir(), './route.ts')) // 是否存在自定义路由
   // without manualRoutes create emtry object
-  const manualRoutes = declaretiveRoutes ? (await promises.readFile(resolve(getFeDir(), './route.ts'))).toString() : 'export {}'
+  const manualRoutes = declaretiveRoutes
+    ? (await promises.readFile(resolve(getFeDir(), './route.ts'))).toString()
+    : 'export {}'
   const { code } = await transform(manualRoutes, {
     loader: 'ts',
     format: 'esm',
-    keepNames: true
+    keepNames: true,
   })
   // remove empty character and wrapline in vite mode for rollup
-  const serializeCode = code.replace(/(import\([\s\S]*?,)/g, (match) => {
+  const serializeCode = code.replace(/(import\([\s\S]*?,)/g, match => {
     return match.replace(/\s/g, '')
   })
   await writeRoutes(serializeCode, 'ssr-manual-routes.js')
@@ -84,7 +88,7 @@ const readAsyncChunk = async (): Promise<Record<string, string>> => {
 }
 
 const addAsyncChunk = async (dynamicCssOrder: string[], webpackChunkName: string) => {
-  const arr = []
+  const arr = [] as string[]
   const asyncChunkMap = await readAsyncChunk()
   for (const key in asyncChunkMap) {
     if (asyncChunkMap[key].includes(webpackChunkName)) {
@@ -94,7 +98,8 @@ const addAsyncChunk = async (dynamicCssOrder: string[], webpackChunkName: string
   return arr.concat(dynamicCssOrder)
 }
 const cyrb53 = function (str: string, seed = 0) {
-  let h1 = 0xdeadbeef ^ seed; let h2 = 0x41c6ce57 ^ seed
+  let h1 = 0xdeadbeef ^ seed
+  let h2 = 0x41c6ce57 ^ seed
   for (let i = 0, ch; i < str.length; i++) {
     ch = str.charCodeAt(i)
     h1 = Math.imul(h1 ^ ch, 2654435761)
@@ -105,9 +110,9 @@ const cyrb53 = function (str: string, seed = 0) {
   return 4294967296 * (2097151 & h2) + (h1 >>> 0)
 }
 
-const cryptoAsyncChunkName = (chunks: Array<{name: string}>, asyncChunkMap: Record<string, string[]>) => {
+const cryptoAsyncChunkName = (chunks: Array<{ name: string }>, asyncChunkMap: Record<string, string[]>) => {
   // 加密异步模块 name，防止名称过长
-  chunks.sort((a, b) => a.name > b.name ? -1 : 1) // 保证相同值不同顺序的数组最终的加密结果一致
+  chunks.sort((a, b) => (a.name > b.name ? -1 : 1)) // 保证相同值不同顺序的数组最终的加密结果一致
   const allChunksNames = chunks.map(item => item.name).join('~')
   const allChunksNamesArr = allChunksNames.split('~')
   const cryptoAllChunksNames = String(cyrb53(allChunksNames))
@@ -118,7 +123,8 @@ const cryptoAsyncChunkName = (chunks: Array<{name: string}>, asyncChunkMap: Reco
 }
 
 const isFaaS = async (fun?: boolean) => {
-  const result = await promises.access(resolve(getCwd(), fun ? 'template.yml' : 'f.yml'))
+  const result = await promises
+    .access(resolve(getCwd(), fun ? 'template.yml' : 'f.yml'))
     .then(() => true)
     .catch(() => false)
   return result
@@ -151,7 +157,7 @@ const loadModuleFromFramework = (path: string) => {
   try {
     const framework = judgeFramework()
     return require.resolve(path, {
-      paths: [realpathSync(resolve(getCwd(), `./node_modules/${framework}`))]
+      paths: [realpathSync(resolve(getCwd(), `./node_modules/${framework}`))],
     })
   } catch (error) {
     return ''
@@ -167,7 +173,8 @@ const processError = (err: any) => {
   }
 }
 const accessFile = async (file: string) => {
-  const result = await promises.access(file)
+  const result = await promises
+    .access(file)
     .then(() => true)
     .catch(() => false)
   return result
@@ -184,7 +191,10 @@ const accessFileSync = (file: string) => {
 }
 
 const copyReactContext = async () => {
-  await promises.copyFile(resolve(getCwd(), './node_modules/ssr-plugin-react/src/entry/create-context.ts'), resolve(getCwd(), './build/create-context.ts'))
+  await promises.copyFile(
+    resolve(getCwd(), './node_modules/ssr-plugin-react/src/entry/create-context.ts'),
+    resolve(getCwd(), './build/create-context.ts')
+  )
 }
 
 const execPromisify = promisify(exec)
@@ -204,7 +214,7 @@ const normalizeEndPath = (path: string) => {
   return path
 }
 
-const stringifyDefine = (obj: {[key: string]: Json}) => {
+const stringifyDefine = (obj: { [key: string]: any }) => {
   for (const key in obj) {
     const val = obj[key]
     if (typeof val === 'string' && val.slice(0, 1) !== '"') {
@@ -237,5 +247,5 @@ export {
   transformManualRoutes,
   writeRoutes,
   stringifyDefine,
-  judgeServerFramework
+  judgeServerFramework,
 }

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import type { Request, Response } from 'express'
 import type { RouterContext } from 'koa-router'
 import type { ICookies, SetOption } from 'cookies'
@@ -8,15 +9,15 @@ export interface ExpressContext {
 }
 
 // compatible with egg types
-type IKoaContext = Omit<RouterContext, 'cookies' |'router'| '_matchedRoute'| '_matchedRouteName'> & {
+type IKoaContext = Omit<RouterContext, 'cookies' | 'router' | '_matchedRoute' | '_matchedRouteName'> & {
   cookies: Omit<Partial<ICookies>, 'set'> & {
     set?: (name: string, value?: string | null, opts?: SetOption) => IKoaContext['cookies']
   }
 }
 
-export type ISSRContext<T={}> = (ExpressContext|IKoaContext) & T
-export type ISSRNestContext<T={}> = ExpressContext & T
-export type ISSRMidwayContext<T={}> = IKoaContext & T
+export type ISSRContext<T = Record<string, any>> = (ExpressContext | IKoaContext) & T
+export type ISSRNestContext<T = Record<string, any>> = ExpressContext & T
+export type ISSRMidwayContext<T = Record<string, any>> = IKoaContext & T
 
 export interface Options {
   mode?: string

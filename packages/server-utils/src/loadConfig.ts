@@ -1,7 +1,18 @@
 import { join } from 'path'
-import { getCwd, getUserConfig, normalizeStartPath, normalizeEndPath, getFeDir, judgeFramework, loadModuleFromFramework, stringifyDefine, accessFileSync } from './cwd'
 import { coerce } from 'semver'
-import { IConfig } from '../../../types/config'
+import type { IConfig } from 'cssr-types'
+import {
+  getCwd,
+  getUserConfig,
+  normalizeStartPath,
+  normalizeEndPath,
+  getFeDir,
+  judgeFramework,
+  loadModuleFromFramework,
+  stringifyDefine,
+  accessFileSync,
+} from './cwd'
+
 const framework = judgeFramework()
 const loadConfig = (): IConfig => {
   const userConfig = getUserConfig()
@@ -20,21 +31,27 @@ const loadConfig = (): IConfig => {
   const define = userConfig.define ?? {}
   userConfig.define && stringifyDefine(define)
 
-  const alias = Object.assign({
+  const alias = {
     '@': getFeDir(),
     '~': getCwd(),
-    _build: join(getCwd(), './build')
-  }, framework === 'ssr-plugin-react' ? {
-    react: loadModuleFromFramework('react'),
-    'react-router': loadModuleFromFramework('react-router'),
-    'react-router-dom': loadModuleFromFramework('react-router-dom')
-  } : {
-    vue$: framework === 'ssr-plugin-vue' ? 'vue/dist/vue.runtime.esm.js' : 'vue/dist/vue.runtime.esm-bundler.js'
-  }, userConfig.alias)
+    '_build': join(getCwd(), './build'),
+    ...(framework === 'ssr-plugin-react'
+      ? {
+          'react': loadModuleFromFramework('react'),
+          'react-router': loadModuleFromFramework('react-router'),
+          'react-router-dom': loadModuleFromFramework('react-router-dom'),
+        }
+      : {
+          vue$: framework === 'ssr-plugin-vue' ? 'vue/dist/vue.runtime.esm.js' : 'vue/dist/vue.runtime.esm-bundler.js',
+        }),
+    ...userConfig.alias,
+  }
 
   type ClientLogLevel = 'error'
 
-  const publicPath = userConfig.publicPath?.startsWith('http') ? userConfig.publicPath : normalizeStartPath(userConfig.publicPath ?? '/')
+  const publicPath = userConfig.publicPath?.startsWith('http')
+    ? userConfig.publicPath
+    : normalizeStartPath(userConfig.publicPath ?? '/')
   const devPublicPath = publicPath.startsWith('http') ? publicPath.replace(/^http(s)?:\/\/(.*)?\d/, '') : publicPath // 本地开发不使用 http://localhost:3000 这样的 path 赋值给 webpack-dev-server 会很难处理
 
   const moduleFileExtensions = [
@@ -50,7 +67,7 @@ const loadConfig = (): IConfig => {
     '.web.jsx',
     '.jsx',
     '.vue',
-    '.css'
+    '.css',
   ]
 
   const isDev = userConfig.isDev ?? process.env.NODE_ENV !== 'production'
@@ -73,9 +90,17 @@ const loadConfig = (): IConfig => {
 
   const useHash = !isDev // 生产环境默认生成 hash
 
-  const whiteList: RegExp[] = [/\.(css|less|sass|scss)$/, /vant.*?style/, /antd.*?(style)/, /ant-design-vue.*?(style)/, /store$/]
+  const whiteList: RegExp[] = [
+    /\.(css|less|sass|scss)$/,
+    /vant.*?style/,
+    /antd.*?(style)/,
+    /ant-design-vue.*?(style)/,
+    /store$/,
+  ]
 
-  const jsOrder = isVite ? [`${chunkName}.js`] : [`runtime~${chunkName}.js`, 'vendor.js', `${chunkName}.js`].concat(userConfig.extraJsOrder ?? [])
+  const jsOrder = isVite
+    ? [`${chunkName}.js`]
+    : [`runtime~${chunkName}.js`, 'vendor.js', `${chunkName}.js`].concat(userConfig.extraJsOrder ?? [])
 
   const cssOrder = ['vendor.css', `${chunkName}.css`].concat(userConfig.extraCssOrder ?? [])
 
@@ -87,35 +112,39 @@ const loadConfig = (): IConfig => {
     colors: true, // 以不同颜色区分构建信息
     modules: false, // 添加构建模块信息
     warnings: false,
-    entrypoints: false
+    entrypoints: false,
   }
 
   const dynamic = true
   // ref https://www.babeljs.cn/docs/babel-preset-env#corejs
-  const corejsVersion = loadModuleFromFramework('core-js/package.json') && coerce(require(loadModuleFromFramework('core-js/package.json')).version)!.major
-  const corejsOptions = userConfig.corejs ? {
-    corejs: {
-      version: corejsVersion,
-      proposals: corejsVersion === 3
-    },
-    targets: {
-      chrome: '60',
-      firefox: '60',
-      ie: '9',
-      safari: '10',
-      edge: '17'
-    },
-    useBuiltIns: 'usage',
-    shippedProposals: corejsVersion === 2,
-    ...userConfig.corejsOptions
-  } : {}
+  const corejsVersion =
+    loadModuleFromFramework('core-js/package.json') &&
+    coerce(require(loadModuleFromFramework('core-js/package.json')).version)!.major
+  const corejsOptions = userConfig.corejs
+    ? {
+        corejs: {
+          version: corejsVersion,
+          proposals: corejsVersion === 3,
+        },
+        targets: {
+          chrome: '60',
+          firefox: '60',
+          ie: '9',
+          safari: '10',
+          edge: '17',
+        },
+        useBuiltIns: 'usage',
+        shippedProposals: corejsVersion === 2,
+        ...userConfig.corejsOptions,
+      }
+    : {}
 
   const getOutput = () => ({
     clientOutPut: join(cwd, './build/client'),
-    serverOutPut: join(cwd, './build/server')
+    serverOutPut: join(cwd, './build/server'),
   })
 
-  const webpackDevServerConfig = Object.assign({
+  const webpackDevServerConfig = {
     stats: webpackStatsOption,
     disableInfo: true, // 关闭 webpack-dev-server 自带的 server Info 信息
     disableHostCheck: true,
@@ -127,13 +156,14 @@ const loadConfig = (): IConfig => {
     hot: true,
     port: fePort,
     https,
-    clientLogLevel: clientLogLevel,
+    clientLogLevel,
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
-      'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization'
-    }
-  }, userConfig.webpackDevServerConfig)
+      'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
+    },
+    ...userConfig.webpackDevServerConfig,
+  }
 
   const chainBaseConfig = () => {
     // 覆盖默认 webpack 配置
@@ -150,7 +180,7 @@ const loadConfig = (): IConfig => {
   const hotUpdatePath = `${normalizeEndPath(devPublicPath)}*.hot-update**`
   const proxyKey = [staticPath, hotUpdatePath, manifestPath]
 
-  const config = Object.assign({}, {
+  const config = {
     chainBaseConfig,
     chainServerConfig,
     chainClientConfig,
@@ -183,24 +213,25 @@ const loadConfig = (): IConfig => {
     isVite,
     isCI,
     supportOptinalChaining,
-    define
-  }, userConfig)
+    define,
+    ...userConfig,
+  }
   config.alias = alias
   config.corejsOptions = corejsOptions
 
   config.webpackDevServerConfig = webpackDevServerConfig // 防止把整个 webpackDevServerConfig 全量覆盖了
 
-  config.babelOptions = userConfig.babelOptions ? {
-    ...{
-      babelHelpers: 'bundled' as 'bundled',
-      exclude: /node_modules|\.(css|less|sass)/,
-      extensions: ['.ts', '.vue', '.tsx', '.js']
-    },
-    ...userConfig.babelOptions
-  } : undefined
-  return config
+  config.babelOptions = userConfig.babelOptions
+    ? {
+        ...{
+          babelHelpers: 'bundled' as const,
+          exclude: /node_modules|\.(css|less|sass)/,
+          extensions: ['.ts', '.vue', '.tsx', '.js'],
+        },
+        ...userConfig.babelOptions,
+      }
+    : undefined
+  return config as any
 }
 
-export {
-  loadConfig
-}
+export { loadConfig }

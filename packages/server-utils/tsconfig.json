@@ -4,7 +4,9 @@
     "suppressImplicitAnyIndexErrors": true,
     "noImplicitAny": false,
     "noImplicitThis": false,
-    "rootDir": "./"
+    "incremental":true,
+    "rootDir": "./",
+    "outDir": "./lib"
   },
-  "include": ["src/*.ts"]
+  "include": ["src/**/*.ts"]
 }

@@ -2,9 +2,9 @@ export * from './ctx'
 export * from './config'
 export * from './yargs'
 
-export type Mode = 'development' |'production'
+export type Mode = 'development' | 'production'
 
-export type ESMFeRouteItem<T={}> = {
+export type ESMFeRouteItem<T = Record<string, any>> = {
   path: string
   webpackChunkName: string
 } & T

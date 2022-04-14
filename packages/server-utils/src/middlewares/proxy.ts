@@ -1,11 +1,13 @@
 import { createProxyMiddleware } from 'http-proxy-middleware'
-export interface proxyOptions {
-  express?: boolean
-}
 import * as koaConnect from 'koa2-connect'
 import { judgeFramework } from '../cwd'
 import { loadConfig } from '../loadConfig'
-function onProxyReq (proxyReq: any, req: any) {
+
+export interface proxyOptions {
+  express?: boolean
+}
+
+function onProxyReq(proxyReq: any, req: any) {
   Object.keys(req.headers).forEach(function (key) {
     proxyReq.setHeader(key, req.headers[key])
   })
@@ -17,11 +19,12 @@ const getDevProxyMiddlewaresArr = async (options?: proxyOptions) => {
   const express = options ? options.express : false
   const proxyMiddlewaresArr: any[] = []
 
-  function registerProxy (proxy: any) {
-    for (const path in proxy) {
-      const options = proxy[path]
+  function registerProxy(_proxy: any) {
+    // eslint-disable-next-line guard-for-in
+    for (const path in _proxy) {
+      const _options = _proxy[path]
       // 如果底层服务端框架是基于 express 的。则不需要用 koaConnect 转换为 koa 中间件
-      const middleware = express ? createProxyMiddleware(path, options) : kc(createProxyMiddleware(path, options))
+      const middleware = express ? createProxyMiddleware(path, _options) : kc(createProxyMiddleware(path, _options))
       proxyMiddlewaresArr.push(middleware)
     }
   }
@@ -47,12 +50,12 @@ const getDevProxyMiddlewaresArr = async (options?: proxyOptions) => {
         changeOrigin: true,
         secure: false,
         onProxyReq,
-        logLevel: 'warn'
+        logLevel: 'warn',
       }
 
       const proxyPathMap: Record<string, any> = {
         '/sockjs-node': remoteStaticServerOptions,
-        '/__webpack_dev_server__': remoteStaticServerOptions
+        '/__webpack_dev_server__': remoteStaticServerOptions,
       }
       for (const key of proxyKey) {
         proxyPathMap[key] = remoteStaticServerOptions
@@ -64,6 +67,4 @@ const getDevProxyMiddlewaresArr = async (options?: proxyOptions) => {
   return proxyMiddlewaresArr
 }
 
-export {
-  getDevProxyMiddlewaresArr
-}
+export { getDevProxyMiddlewaresArr }

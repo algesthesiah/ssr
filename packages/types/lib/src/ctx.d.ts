@@ -10,9 +10,9 @@ declare type IKoaContext = Omit<RouterContext, 'cookies' | 'router' | '_matchedR
         set?: (name: string, value?: string | null, opts?: SetOption) => IKoaContext['cookies'];
     };
 };
-export declare type ISSRContext<T = {}> = (ExpressContext | IKoaContext) & T;
-export declare type ISSRNestContext<T = {}> = ExpressContext & T;
-export declare type ISSRMidwayContext<T = {}> = IKoaContext & T;
+export declare type ISSRContext<T = Record<string, any>> = (ExpressContext | IKoaContext) & T;
+export declare type ISSRNestContext<T = Record<string, any>> = ExpressContext & T;
+export declare type ISSRMidwayContext<T = Record<string, any>> = IKoaContext & T;
 export interface Options {
     mode?: string;
 }

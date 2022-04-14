@@ -5,7 +5,4 @@ const logRed = (text: string) => {
   console.log(`\x1B[31m ${text}`)
 }
 
-export {
-  logGreen,
-  logRed
-}
+export { logGreen, logRed }

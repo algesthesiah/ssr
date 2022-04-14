@@ -1,10 +1,11 @@
+// @ts-nocheck
 import { pathToRegexp } from 'path-to-regexp'
 
 const cache = {}
 const cacheLimit = 10000
 let cacheCount = 0
 
-function compilePath (path, options) {
+function compilePath(path, options) {
   const cacheKey = `${options.end}${options.strict}${options.sensitive}`
   const pathCache = cache[cacheKey] || (cache[cacheKey] = {})
 
@@ -16,18 +17,18 @@ function compilePath (path, options) {
 
   if (cacheCount < cacheLimit) {
     pathCache[path] = result
-    cacheCount++
+    cacheCount += 1
   }
 
   return result
 }
 
-function matchPath (pathname, options = {}) {
+function matchPath(pathname, options = {}) {
   if (typeof options === 'string' || Array.isArray(options)) {
     options = { path: options }
   }
 
-  const { path, exact = false, strict = false, sensitive = false } = options
+  const { path, exact = false, strict = false, sensitive = false } = options as any
 
   const paths = [].concat(path)
 
@@ -38,7 +39,7 @@ function matchPath (pathname, options = {}) {
     const { regexp, keys } = compilePath(path, {
       end: exact,
       strict,
-      sensitive
+      sensitive,
     })
     const match = regexp.exec(pathname)
 
@@ -56,17 +57,15 @@ function matchPath (pathname, options = {}) {
       params: keys.reduce((memo, key, index) => {
         memo[key.name] = values[index]
         return memo
-      }, {})
+      }, {}),
     }
   }, null)
 }
 
-function findRoute<T extends {path: string}> (Routes: T[], path: string): T {
+function findRoute<T extends { path: string }>(Routes: T[], path: string): T {
   // 根据请求的 path 来匹配到对应的 Component
   const route = Routes.find(route => matchPath(path, route) && matchPath(path, route).isExact)
   return route
 }
 
-export {
-  findRoute
-}
+export { findRoute }
