@@ -28,7 +28,7 @@
   "homepage": "https://github.com/algesthesiah/cssr#readme",
   "devDependencies": {
     "@types/semver": "^7.3.9",
-    "cssr-types": "workspace:1.0.1",
+    "cssr-types": "workspace:1.0.2",
     "rollup": "^2.55.1",
     "vite": "^2.7.0"
   },
