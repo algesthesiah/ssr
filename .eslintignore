@@ -13,6 +13,6 @@
 **/.serverless
 docs
 .rollup.cache
-lib
-es
-tsconfig.tsbuildinfo
+**/lib
+**/es
+**/tsconfig.tsbuildinfo

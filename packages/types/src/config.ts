@@ -1,14 +1,16 @@
-import { RuleSetCondition, Options } from 'webpack'
+/* eslint-disable @typescript-eslint/ban-types */
+import { Options, RuleSetCondition } from 'webpack'
 import * as Config from 'webpack-chain'
 import type { RollupBabelInputPluginOptions } from '@rollup/plugin-babel'
 import { Argv } from './yargs'
 import { ISSRContext } from './ctx'
 
+export { Config }
 export type Script = Array<{
   describe?:
-    | any
+    | object
     | {
-        attrs: any
+        attrs: object
       }
   content?: string
 }>
@@ -67,8 +69,8 @@ export interface IConfig {
   ssrVueLoaderOptions?: any
   csrVueLoaderOptions?: any
   corejs?: boolean
-  corejsOptions?: Record<string, any>
-  https: boolean | Record<string, any>
+  corejsOptions?: Object
+  https: boolean | object
   babelExtraModule?: RuleSetCondition
   routerPriority?: Record<string, number>
   routerOptimize?: {
@@ -110,6 +112,7 @@ export interface IConfig {
   }
   babelOptions?: RollupBabelInputPluginOptions
   hashRouter?: boolean
+  htmlTemplate?: string
 }
 
 export interface proxyOptions {

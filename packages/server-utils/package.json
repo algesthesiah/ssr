@@ -1,6 +1,6 @@
 {
   "name": "cssr-server-utils",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "utils for serverless ssr",
   "main": "./lib/index.js",
   "module": "./es/index.js",
@@ -28,9 +28,10 @@
   "homepage": "https://github.com/algesthesiah/cssr#readme",
   "devDependencies": {
     "@types/semver": "^7.3.9",
-    "cssr-types": "workspace:1.0.3",
+    "cssr-types": "^1.0.4",
     "rollup": "^2.55.1",
-    "vite": "^2.7.0"
+    "vite": "^2.7.0",
+    "webpack-chain": "^6.4.0"
   },
   "dependencies": {
     "axios": "^0.21.1",

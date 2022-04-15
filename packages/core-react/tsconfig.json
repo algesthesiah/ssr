@@ -5,6 +5,7 @@
     "noImplicitAny": false,
     "noImplicitThis": false,
     "rootDir": "./src",
+    "outDir": "./lib"
   },
   "include": ["src/**/*.ts"]
 }

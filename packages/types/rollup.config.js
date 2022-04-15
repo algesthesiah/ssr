@@ -3,7 +3,6 @@ import commonjs from '@rollup/plugin-commonjs'
 import { terser } from 'rollup-plugin-terser'
 import resolve from '@rollup/plugin-node-resolve' // 帮助寻找 node_modules 里的包
 import postcss from 'rollup-plugin-postcss'
-import babel from '@rollup/plugin-babel'
 
 const config = [
   {
@@ -12,6 +11,7 @@ const config = [
       {
         format: 'umd',
         dir: 'lib',
+        name: 'cssr-types',
       },
       {
         format: 'es',

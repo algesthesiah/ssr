@@ -1,65 +1,74 @@
-
 import { join } from 'path'
-import { getCwd, loadConfig, getLocalNodeModules, setStyle, addImageChain, loadModuleFromFramework } from 'ssr-server-utils'
+import {
+  getCwd,
+  loadConfig,
+  getLocalNodeModules,
+  setStyle,
+  addImageChain,
+  loadModuleFromFramework,
+} from 'cssr-server-utils'
 import * as WebpackChain from 'webpack-chain'
 import * as webpack from 'webpack'
+
 export type Mode = 'development' | 'production'
 
 const MiniCssExtractPlugin = require(loadModuleFromFramework('mini-css-extract-plugin'))
 const WebpackBar = require('webpackbar')
+
 const loadModule = loadModuleFromFramework
 
 const addBabelLoader = (chain: WebpackChain.Rule<WebpackChain.Module>, envOptions: any) => {
   const { babelOptions } = loadConfig()
-  chain.use('babel-loader')
+  chain
+    .use('babel-loader')
     .loader(loadModule('babel-loader'))
     .options({
       cacheDirectory: true,
       cacheCompression: false,
       sourceType: 'unambiguous',
       presets: [
-        [
-          loadModule('@babel/preset-env'),
-          envOptions
-        ],
+        [loadModule('@babel/preset-env'), envOptions],
         [loadModule('babel-preset-react-app'), { flow: false, typescript: true }],
-        ...babelOptions?.presets ?? []
+        ...(babelOptions?.presets ?? []),
       ],
       plugins: [
-        [loadModule('@babel/plugin-transform-runtime'), {
-          regenerator: false,
-          corejs: false,
-          helpers: true
-        }],
+        [
+          loadModule('@babel/plugin-transform-runtime'),
+          {
+            regenerator: false,
+            corejs: false,
+            helpers: true,
+          },
+        ],
         [
           loadModule('babel-plugin-import'),
           {
             libraryName: 'antd',
             libraryDirectory: 'lib',
-            style: true
-          }, 'antd'
+            style: true,
+          },
+          'antd',
         ],
         [loadModule('@babel/plugin-proposal-private-methods'), { loose: true }],
         [loadModule('@babel/plugin-proposal-private-property-in-object'), { loose: true }],
-        ...babelOptions?.plugins ?? []
-      ]
+        ...(babelOptions?.plugins ?? []),
+      ],
     })
     .end()
 }
 const getBaseConfig = (chain: WebpackChain, isServer: boolean) => {
   const config = loadConfig()
-  const { moduleFileExtensions, useHash, isDev, chainBaseConfig, corejsOptions, babelExtraModule, alias, define } = config
+  const { moduleFileExtensions, useHash, isDev, chainBaseConfig, corejsOptions, babelExtraModule, alias, define } =
+    config
   const mode = process.env.NODE_ENV as Mode
   const envOptions = {
     modules: false,
-    ...corejsOptions
+    ...corejsOptions,
   }
 
   chain.mode(mode)
   chain.module.strictExportPresence(true)
-  chain
-    .resolve
-    .modules
+  chain.resolve.modules
     .add('node_modules')
     .add(join(getCwd(), './node_modules'))
     .when(isDev, chain => {
@@ -68,34 +77,38 @@ const getBaseConfig = (chain: WebpackChain, isServer: boolean) => {
     .end()
     .extensions.merge(moduleFileExtensions)
     .end()
-    .alias
-    .end()
+    .alias.end()
 
-  alias && Object.keys(alias).forEach(item => {
-    chain.resolve.alias
-      .set(item, alias[item])
-  })
+  alias &&
+    Object.keys(alias).forEach(item => {
+      chain.resolve.alias.set(item, alias[item])
+    })
 
   addImageChain(chain, isServer)
 
   const babelModule = chain.module
     .rule('compileBabel')
     .test(/\.(js|mjs|jsx|ts|tsx)$/)
-    .exclude
-    .add(/node_modules|core-js/)
+    .exclude.add(/node_modules|core-js/)
     .end()
 
   const module = chain.module
     .rule('compileBabelForExtraModule')
     .test(/\.(js|mjs|jsx|ts|tsx)$/)
-    .include
-    .add([/ssr-plugin-react/, /ssr-client-utils/, /ssr-hoc-react/])
+    .include.add([/cssr-plugin-react/, /cssr-client-utils/, /cssr-hoc-react/])
 
   let babelForExtraModule
   if (babelExtraModule) {
-    babelForExtraModule = module.add(babelExtraModule).end().exclude.add(/core-js/).end()
+    babelForExtraModule = module
+      .add(babelExtraModule)
+      .end()
+      .exclude.add(/core-js/)
+      .end()
   } else {
-    babelForExtraModule = module.end().exclude.add(/core-js/).end()
+    babelForExtraModule = module
+      .end()
+      .exclude.add(/core-js/)
+      .end()
   }
 
   addBabelLoader(babelModule, envOptions)
@@ -104,14 +117,14 @@ const getBaseConfig = (chain: WebpackChain, isServer: boolean) => {
   setStyle(chain, /\.css$/, {
     rule: 'css',
     isServer,
-    importLoaders: 1
+    importLoaders: 1,
   })
 
   setStyle(chain, /\.less$/, {
     rule: 'less',
     loader: 'less-loader',
     isServer,
-    importLoaders: 2
+    importLoaders: 2,
   })
 
   chain.module
@@ -122,27 +135,31 @@ const getBaseConfig = (chain: WebpackChain, isServer: boolean) => {
     .options({
       name: 'static/[name].[hash:8].[ext]',
       esModule: false,
-      emitFile: !isServer
+      emitFile: !isServer,
     })
 
-  chain.plugin('minify-css').use(MiniCssExtractPlugin, [{
-    filename: useHash ? 'static/css/[name].[contenthash:8].css' : 'static/css/[name].css',
-    chunkFilename: useHash ? 'static/css/[name].[contenthash:8].chunk.css' : 'static/css/[name].chunk.css'
-  }])
+  chain.plugin('minify-css').use(MiniCssExtractPlugin, [
+    {
+      filename: useHash ? 'static/css/[name].[contenthash:8].css' : 'static/css/[name].css',
+      chunkFilename: useHash ? 'static/css/[name].[contenthash:8].chunk.css' : 'static/css/[name].chunk.css',
+    },
+  ])
 
-  chain.plugin('webpackBar').use(new WebpackBar({
-    name: isServer ? 'server' : 'client',
-    color: isServer ? '#f173ac' : '#45b97c'
-  }))
-  chain.plugin('ssrDefine').use(webpack.DefinePlugin, [{
-    __isBrowser__: !isServer,
-    ...(isServer ? define?.server : define?.client),
-    ...define?.base
-  }])
+  chain.plugin('webpackBar').use(
+    new WebpackBar({
+      name: isServer ? 'server' : 'client',
+      color: isServer ? '#f173ac' : '#45b97c',
+    })
+  )
+  chain.plugin('ssrDefine').use(webpack.DefinePlugin, [
+    {
+      __isBrowser__: !isServer,
+      ...(isServer ? define?.server : define?.client),
+      ...define?.base,
+    },
+  ])
   chainBaseConfig(chain)
   return config
 }
 
-export {
-  getBaseConfig
-}
+export { getBaseConfig }

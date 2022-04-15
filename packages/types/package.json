@@ -1,6 +1,6 @@
 {
   "name": "cssr-types",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "types for cssr",
   "main": "./lib/index.js",
   "module": "./es/index.js",
