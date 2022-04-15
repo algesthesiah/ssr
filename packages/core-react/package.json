@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/algesthesiah/cssr#readme",
   "dependencies": {
-    "cssr-server-utils": "^6.2.4",
+    "cssr-server-utils": "^1.0.0",
     "react-dom": "^17.0.0",
     "serialize-javascript": "^6.0.0"
   },

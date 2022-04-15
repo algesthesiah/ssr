@@ -30,7 +30,7 @@
   "dependencies": {
     "ora": "^4.0.4",
     "rimraf": "^3.0.2",
-    "cssr-server-utils": "^6.2.4"
+    "cssr-server-utils": "^1.0.0"
   },
   "peerDependencies": {
     "@nestjs/common": ">=8",

@@ -1,6 +1,6 @@
 {
   "name": "cssr-server-utils",
-  "version": "1.0.0-bate",
+  "version": "1.0.0",
   "description": "utils for serverless ssr",
   "main": "./lib/index.js",
   "module": "./es/index.js",

@@ -1,3 +1,4 @@
 packages:
+  - 'packages/cli/**'
   - 'packages/server-utils/**'
   - 'packages/types/**'

@@ -56,7 +56,7 @@
     "react-dev-utils": "^11.0.4",
     "serialize-javascript": "^6.0.0",
     "cssrreact": "^6.2.3",
-    "cssr-server-utils": "^6.2.4",
+    "cssr-server-utils": "^1.0.0",
     "terser-webpack-plugin": "^2.3.5",
     "url-loader": "^4.1.1",
     "vite": "^2.7.0",
