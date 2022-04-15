@@ -1,6 +1,7 @@
 packages:
   - 'packages/cli/**'
   - 'packages/types-react/**'
+  - 'packages/hoc-react/**'
   - 'packages/client-utils/**'
   - 'packages/server-utils/**'
   - 'packages/types/**'
