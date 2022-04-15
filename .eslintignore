@@ -12,3 +12,7 @@
 **/prism.js
 **/.serverless
 docs
+.rollup.cache
+lib
+es
+tsconfig.tsbuildinfo

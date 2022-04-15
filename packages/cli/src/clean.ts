@@ -1,9 +1,9 @@
 import { resolve } from 'path'
 import { rm } from 'shelljs'
+import { accessFile, getCwd } from 'cssr-server-utils'
 
 export const cleanOutDir = async () => {
   // 默认清理 dist 文件夹
-  const { accessFile, getCwd } = await import('cssr-server-utils')
   const cwd = getCwd()
   const tsconfigExist = await accessFile(resolve(cwd, './tsconfig.json'))
   if (tsconfigExist && process.env.CLEAN !== 'false') {

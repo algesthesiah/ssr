@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { pathToRegexp } from 'path-to-regexp'
 
 const cache = {}
@@ -23,17 +22,24 @@ function compilePath(path, options) {
   return result
 }
 
-function matchPath(pathname, options = {}) {
+type IMatchPath = {
+  path: string
+  url: string
+  isExact: boolean
+  params: any
+} | null
+function matchPath(pathname, options = {}): IMatchPath {
   if (typeof options === 'string' || Array.isArray(options)) {
     options = { path: options }
   }
 
-  const { path, exact = false, strict = false, sensitive = false } = options as any
+  const { path: _path, exact = false, strict = false, sensitive = false } = options as any
 
-  const paths = [].concat(path)
+  const paths = [].concat(_path)
 
+  // eslint-disable-next-line @typescript-eslint/no-shadow
   return paths.reduce((matched, path) => {
-    if (!path && path !== '') return null
+    if (!path && path !== '') return null as IMatchPath
     if (matched) return matched
 
     const { regexp, keys } = compilePath(path, {
@@ -43,12 +49,12 @@ function matchPath(pathname, options = {}) {
     })
     const match = regexp.exec(pathname)
 
-    if (!match) return null
+    if (!match) return null as IMatchPath
 
     const [url, ...values] = match
     const isExact = pathname === url
 
-    if (exact && !isExact) return null
+    if (exact && !isExact) return null as IMatchPath
 
     return {
       path, // the path used to match
@@ -59,12 +65,12 @@ function matchPath(pathname, options = {}) {
         return memo
       }, {}),
     }
-  }, null)
+  }, null as IMatchPath)
 }
 
 function findRoute<T extends { path: string }>(Routes: T[], path: string): T {
   // 根据请求的 path 来匹配到对应的 Component
-  const route = Routes.find(route => matchPath(path, route) && matchPath(path, route).isExact)
+  const route = Routes.find(_route => matchPath(path, _route) && matchPath(path, route)?.isExact)
   return route
 }
 

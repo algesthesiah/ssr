@@ -1,9 +1,14 @@
-// @ts-nocheck
 import { Readable, PassThrough } from 'stream'
 
 const slice = Array.prototype.slice
 
 class StringToStream extends Readable {
+  _str: string
+
+  _encoding: string
+
+  ended: any
+
   constructor(str: string) {
     super()
     this._str = str
@@ -13,6 +18,7 @@ class StringToStream extends Readable {
   _read() {
     if (!this.ended) {
       process.nextTick(() => {
+        // @ts-ignore
         this.push(Buffer.from(this._str, this._encoding))
         this.push(null)
       })
@@ -20,20 +26,12 @@ class StringToStream extends Readable {
     }
   }
 }
-function endStream() {
-  merging = false
-  // emit 'queueDrain' when all streams merged.
-  mergedStream.emit('queueDrain')
-  if (doEnd) {
-    mergedStream.end()
-  }
-}
 // check and pause streams for pipe.
 function pauseStreams(streams, options) {
   if (!Array.isArray(streams)) {
     // Backwards-compat with old-style streams
     if (!streams._readableState && streams.pipe) {
-      streams = streams.pipe(PassThrough(options))
+      streams = streams.pipe(new PassThrough(options))
     }
     if (!streams._readableState || !streams.pause || !streams.pipe) {
       throw new Error('Only readable stream can be merged.')
@@ -46,7 +44,6 @@ function pauseStreams(streams, options) {
   }
   return streams
 }
-
 function mergeStream2(...arg: any[]): Readable {
   const streamsQueue = []
   // eslint-disable-next-line prefer-rest-params
@@ -68,8 +65,15 @@ function mergeStream2(...arg: any[]): Readable {
   if (options.highWaterMark == null) {
     options.highWaterMark = 64 * 1024
   }
-  const mergedStream = PassThrough(options)
-
+  const mergedStream = new PassThrough(options)
+  function endStream() {
+    merging = false
+    // emit 'queueDrain' when all streams merged.
+    mergedStream.emit('queueDrain')
+    if (doEnd) {
+      mergedStream.end()
+    }
+  }
   function mergeStream() {
     if (merging) {
       return
@@ -82,9 +86,11 @@ function mergeStream2(...arg: any[]): Readable {
       return
     }
     if (!Array.isArray(streams)) {
+      // @ts-ignore
       streams = [streams]
     }
     // eslint-disable-next-line
+    // @ts-ignore
     let pipesCount = streams.length + 1
 
     function next() {
@@ -124,8 +130,9 @@ function mergeStream2(...arg: any[]): Readable {
       // compatible for old stream
       stream.resume()
     }
-
+    // @ts-ignore
     for (let i = 0; i < streams.length; i += 1) {
+      // @ts-ignore
       pipe(streams[i])
     }
 
@@ -133,6 +140,7 @@ function mergeStream2(...arg: any[]): Readable {
   }
   function addStream() {
     for (let i = 0, len = arguments.length; i < len; i += 1) {
+      // @ts-ignore
       // eslint-disable-next-line prefer-rest-params
       streamsQueue.push(pauseStreams(arguments[i], options))
     }
@@ -141,6 +149,7 @@ function mergeStream2(...arg: any[]): Readable {
   }
 
   mergedStream.setMaxListeners(0)
+  // @ts-ignore
   mergedStream.add = addStream
   mergedStream.on('unpipe', function (stream) {
     stream.emit('merge2UnpipeEnd')
@@ -148,7 +157,7 @@ function mergeStream2(...arg: any[]): Readable {
 
   if (args.length) {
     // eslint-disable-next-line prefer-spread
-    addStream.apply(null, args)
+    addStream.apply(null, args as [])
   }
   return mergedStream
 }

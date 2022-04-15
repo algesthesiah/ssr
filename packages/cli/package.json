@@ -29,10 +29,10 @@
   },
   "homepage": "https://github.com/algesthesiah/cssr#readme",
   "dependencies": {
+    "cssr-server-utils": "^1.0.1",
     "esbuild": "^0.13.14",
     "ora": "^4.0.4",
     "shelljs": "^0.8.3",
-    "cssr-server-utils": "^1.0.0",
     "yargs": "^13.2.4"
   },
   "engines": {
@@ -41,6 +41,7 @@
   "devDependencies": {
     "@types/shelljs": "^0.8.7",
     "@types/yargs": "^13.0.0",
-    "concurrently": "^5.1.0"
+    "concurrently": "^5.1.0",
+    "cssr-types": "workspace:^1.0.2"
   }
 }
