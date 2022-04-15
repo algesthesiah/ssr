@@ -1,9 +1,11 @@
 import { RouteComponentProps } from 'react-router-dom'
-import { Action } from './component'
 import type { Request, Response } from 'express'
 import type { RouterContext } from 'koa-router'
 import type { ICookies, SetOption } from 'cookies'
-import {  IConfig } from '../../../types/config'
+import { IConfig } from 'cssr-types'
+import { Action } from './component'
+
+type IObject = Record<string, any>
 export interface ExpressContext {
   request: Request
   response: Response
@@ -13,8 +15,8 @@ type IKoaContext = Omit<RouterContext, 'cookies' | 'router' | '_matchedRoute' | 
     set?: (name: string, value?: string | null, opts?: SetOption) => IKoaContext['cookies']
   }
 }
-export type ISSRContext<T = {}> = (ExpressContext | IKoaContext) & T
-export type ISSRNestContext<T = {}> = ExpressContext & T
+export type ISSRContext<T = IObject> = (ExpressContext | IKoaContext) & T
+export type ISSRNestContext<T = IObject> = ExpressContext & T
 
 export interface LayoutProps {
   ctx?: ISSRContext
@@ -46,8 +48,8 @@ export interface ParamsNest<T, U> {
   state?: any
 }
 
-export type ReactFetch<T={}, U={}> = (params: Params<T, U>) => Promise<any>
-export type ReactNestFetch<T={}, U={}> = (params: ParamsNest<T, U>) => Promise<any>
+export type ReactFetch<T = IObject, U = IObject> = (params: Params<T, U>) => Promise<any>
+export type ReactNestFetch<T = IObject, U = IObject> = (params: ParamsNest<T, U>) => Promise<any>
 
 export type ReactESMFetch = () => Promise<{
   default: ReactFetch
@@ -55,12 +57,12 @@ export type ReactESMFetch = () => Promise<{
 
 export type ESMLayout = () => Promise<React.FC<LayoutProps>>
 
-export interface StaticFC<T={}> extends React.FC<T> {
+export interface StaticFC<T = IObject> extends React.FC<T> {
   fetch?: ReactESMFetch
   layoutFetch?: ReactFetch
 }
 
-export interface DynamicFC<T = {}> extends React.FC<T>{
+export interface DynamicFC<T = IObject> extends React.FC<T> {
   (): Promise<{
     default: StaticFC<T>
   }>
@@ -69,7 +71,7 @@ export interface DynamicFC<T = {}> extends React.FC<T>{
   layoutFetch?: ReactFetch
 }
 
-export type ReactESMFeRouteItem<T = {}, U={}> = {
+export type ReactESMFeRouteItem<T = IObject, U = IObject> = {
   path: string
   fetch?: ReactESMFetch
   component: DynamicFC<T>
@@ -86,7 +88,7 @@ export interface ReactRoutesType {
   reducer?: any
 }
 
-export interface IContext<T=any> {
+export interface IContext<T = any> {
   state?: T
   dispatch?: React.Dispatch<Action>
 }

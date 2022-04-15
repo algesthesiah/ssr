@@ -2,17 +2,16 @@ import { resolve } from 'path'
 import { renderToString, renderToNodeStream } from 'react-dom/server'
 import { loadConfig, getCwd, StringToStream, mergeStream2 } from 'cssr-server-utils'
 import type { ViteDevServer } from 'vite'
-import { UserConfig, IConfig } from '../../../types/config'
-import { ISSRContext, ExpressContext } from '../../../types/ctx'
+import { UserConfig, IConfig, ISSRContext, ExpressContext } from 'cssr-types'
 
 const cwd = getCwd()
 const defaultConfig = loadConfig()
 
-function render (ctx: ISSRContext, options?: UserConfig): Promise<string>
-function render<T> (ctx: ISSRContext, options?: UserConfig): Promise<T>
+function render(ctx: ISSRContext, options?: UserConfig): Promise<string>
+function render<T>(ctx: ISSRContext, options?: UserConfig): Promise<T>
 
-async function render (ctx: ISSRContext, options?: UserConfig) {
-  const config = Object.assign({}, defaultConfig, options ?? {})
+async function render(ctx: ISSRContext, options?: UserConfig) {
+  const config = { ...defaultConfig, ...(options ?? {}) }
   const { stream, isVite } = config
 
   if (!ctx.response.type && typeof ctx.response.type !== 'function') {
@@ -32,8 +31,8 @@ async function render (ctx: ISSRContext, options?: UserConfig) {
     return `<!DOCTYPE html>${renderToString(serverRes)}`
   }
 }
-let viteServer: ViteDevServer|boolean = false
-async function viteRender (ctx: ISSRContext, config: IConfig) {
+let viteServer: ViteDevServer | boolean = false
+async function viteRender(ctx: ISSRContext, config: IConfig) {
   const { isDev, chunkName, reactServerEntry } = config
   let serverRes
   if (isDev) {
@@ -51,7 +50,7 @@ async function viteRender (ctx: ISSRContext, config: IConfig) {
   return serverRes
 }
 
-async function commonRender (ctx: ISSRContext, config: IConfig) {
+async function commonRender(ctx: ISSRContext, config: IConfig) {
   const { isDev, chunkName } = config
   const serverFile = resolve(cwd, `./build/server/${chunkName}.server.js`)
 
@@ -64,6 +63,4 @@ async function commonRender (ctx: ISSRContext, config: IConfig) {
   return serverRes
 }
 
-export {
-  render
-}
+export { render }
