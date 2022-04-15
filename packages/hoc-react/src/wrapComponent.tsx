@@ -1,8 +1,10 @@
+/* eslint-disable */
 import * as React from 'react'
 import { useContext, useEffect, useState } from 'react'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
-import { DynamicFC, StaticFC, Action, IWindow, ReactESMFetch, ReactFetch } from 'ssr-types-react'
-// @ts-expect-error
+import { IWindow } from 'cssr-types'
+import { DynamicFC, StaticFC, Action, ReactESMFetch, ReactFetch } from 'cssr-types-react'
+// @ts-ignore
 import { STORE_CONTEXT } from '_build/create-context'
 
 declare const window: IWindow
@@ -42,11 +44,6 @@ function wrapComponent(WrappedComponent: DynamicFC | StaticFC) {
   return withRouter(props => {
     const [ready, setReady] = useState(WrappedComponent.name !== 'dynamicComponent')
     const { state, dispatch } = useContext(STORE_CONTEXT)
-
-    useEffect(() => {
-      didMount()
-    }, [])
-
     const didMount = async () => {
       if (hasRender || !window.__USE_SSR__) {
         // ssr 情况下只有路由切换的时候才需要调用 fetch
@@ -62,6 +59,10 @@ function wrapComponent(WrappedComponent: DynamicFC | StaticFC) {
       }
       hasRender = true
     }
+    useEffect(() => {
+      didMount()
+    }, [])
+
     return ready ? <WrappedComponent {...props} /> : null
   })
 }
