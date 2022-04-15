@@ -8,6 +8,7 @@ export const cleanOutDir = async () => {
   const tsconfigExist = await accessFile(resolve(cwd, './tsconfig.json'))
   if (tsconfigExist && process.env.CLEAN !== 'false') {
     try {
+      // eslint-disable-next-line security/detect-non-literal-require
       const outDir = require(resolve(cwd, './tsconfig.json')).compilerOptions.outDir
       rm('-rf', resolve(cwd, outDir))
     } catch (error) {

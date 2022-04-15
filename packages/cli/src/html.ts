@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { promises } from 'fs'
 import { join } from 'path'
 import { Argv } from 'cssr-types'
@@ -34,6 +33,7 @@ export const generateHtml = async (argv: Argv) => {
     const hashRouterScript = hashRouter ? '<script>window.hashRouter=true</script>' : ''
 
     const cwd = getCwd()
+    // eslint-disable-next-line security/detect-non-literal-require
     const manifest = require(join(cwd, './build/client/asset-manifest.json'))
     let jsManifest = ''
     jsOrder.forEach(item => {

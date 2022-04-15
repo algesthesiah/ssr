@@ -1,15 +1,12 @@
 {
   "name": "cssr-client-utils",
-  "version": "6.2.3",
+  "version": "1.0.0",
   "description": "client utils for react/vue2/vue3 ssr deploy on serverless or tradtional web server",
-  "main": "./cjs/index.js",
-  "module": "./esm/index.js",
+  "main": "./lib/index.js",
+  "module": "./es/index.js",
   "sideEffects": false,
   "scripts": {
-    "build": "concurrently \"tsc -p ./tsconfig.cjs.json --inlineSourceMap false\" \" tsc -p ./tsconfig.esm.json --inlineSourceMap false\"",
-    "build:only": "concurrently \"tsc-transpile-only --skipLibCheck -p ./tsconfig.cjs.json --inlineSourceMap false\" \" tsc-transpile-only --skipLibCheck -p ./tsconfig.esm.json --inlineSourceMap false\"",
-    "watch": "concurrently \"tsc -w -p ./tsconfig.cjs.json \" \"tsc -w -p ./tsconfig.esm.json \"",
-    "watch:cjs": "tsc -w -p ./tsconfig.cjs.json"
+    "build": "rimraf es && rimraf lib && rollup -c"
   },
   "repository": {
     "type": "git",
@@ -32,6 +29,20 @@
     "path-to-regexp": "^6.2.0"
   },
   "devDependencies": {
-    "concurrently": "^5.1.0"
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
+    "@rollup/plugin-alias": "^3.1.5",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-commonjs": "^20.0.0",
+    "@rollup/plugin-node-resolve": "^13.0.4",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.55.1",
+    "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-postcss": "^4.0.0",
+    "rollup-plugin-preserve-shebangs": "^0.2.0",
+    "rollup-plugin-replace": "^2.2.0",
+    "rollup-plugin-size-snapshot": "^0.12.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.30.0"
   }
 }

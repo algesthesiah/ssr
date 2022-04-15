@@ -9,6 +9,7 @@ const preloadComponent = async (Routes: any[], PrefixRouterBase?: string) => {
       pathname = normalizePath(pathname, PrefixRouterBase)
     }
     if (component.name === 'dynamicComponent' && pathToRegexp(path).test(pathname)) {
+      // eslint-disable-next-line no-await-in-loop
       route.component = (await component()).default
     }
   }
