@@ -2,7 +2,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import type { Request, Response } from 'express'
 import type { RouterContext } from 'koa-router'
 import type { ICookies, SetOption } from 'cookies'
-import { IConfig } from 'cssr-types'
+import type { IConfig } from 'cssr-types'
 import { Action } from './component'
 
 type IObject = Record<string, any>
