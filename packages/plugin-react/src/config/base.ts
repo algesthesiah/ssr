@@ -10,10 +10,10 @@ import {
 import * as WebpackChain from 'webpack-chain'
 import * as webpack from 'webpack'
 import type { IConfig } from 'cssr-types'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 
 export type Mode = 'development' | 'production'
 
-const MiniCssExtractPlugin = require(loadModuleFromFramework('mini-css-extract-plugin'))
 const WebpackBar = require('webpackbar')
 
 const loadModule = loadModuleFromFramework

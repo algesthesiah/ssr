@@ -1,8 +1,9 @@
 import * as React from 'react'
 import { useReducer } from 'react'
-import { IProps, Action, IWindow, ReactRoutesType } from 'ssr-types-react'
-
-// @ts-expect-error
+import { IProps, Action, ReactRoutesType } from 'cssr-types-react'
+import { IWindow } from 'cssr-types'
+// @ts-ignore
+// eslint-disable-next-line import/no-unresolved
 import { STORE_CONTEXT } from '_build/create-context'
 import { Routes } from './create-router'
 
@@ -16,7 +17,8 @@ const isDev = process.env.NODE_ENV !== 'production'
 // 客户端的 context  只需要创建一次，在页面整个生命周期内共享
 declare const window: IWindow
 
-function defaultReducer (state: any, action: Action) {
+function defaultReducer(state: any, action: Action) {
+  // eslint-disable-next-line default-case
   switch (action.type) {
     case 'updateContext':
       if (isDev) {
@@ -27,16 +29,12 @@ function defaultReducer (state: any, action: Action) {
   }
 }
 
-const initialState = Object.assign({}, userState ?? {}, window.__INITIAL_DATA__)
+const initialState = { ...(userState ?? {}), ...window.__INITIAL_DATA__ }
 
-function combineReducer (state: any, action: any) {
+function combineReducer(state: any, action: any) {
   return defaultReducer(state, action) || userReducer(state, action)
 }
-export function AppContext (props: IProps) {
+export function AppContext(props: IProps) {
   const [state, dispatch] = useReducer(combineReducer, initialState)
-  return (
-    <STORE_CONTEXT.Provider value={{ state, dispatch }}>
-      {props.children}
-    </STORE_CONTEXT.Provider>
-  )
+  return <STORE_CONTEXT.Provider value={{ state, dispatch }}>{props.children}</STORE_CONTEXT.Provider>
 }

@@ -1,19 +1,22 @@
-// @ts-expect-error
+/* eslint-disable import/no-unresolved */
+// @ts-ignore
 import * as declareRoutes from '_build/ssr-declare-routes'
-// @ts-expect-error
+// @ts-ignore
 import * as ManualRoutes from '_build/ssr-manual-routes'
-import { ReactRoutesType } from 'ssr-types-react'
+import { ReactRoutesType } from 'cssr-types-react'
 
 const declareRoutesWithType = declareRoutes as ReactRoutesType
 const ManualRoutesWithType = ManualRoutes as ReactRoutesType
 
 const Routes: ReactRoutesType = {
   ...declareRoutes,
-  ...ManualRoutesWithType
+  ...ManualRoutesWithType,
 }
 if (ManualRoutesWithType.FeRoutes) {
-  // 声明式路由覆盖约定式路由同名path
-  const combineRoutes = declareRoutesWithType.FeRoutes.map(route => ManualRoutesWithType.FeRoutes.find(e => e.path === route.path) ?? route)
+  // 声明式路由覆盖约定式路由同名 path
+  const combineRoutes = declareRoutesWithType.FeRoutes.map(
+    route => ManualRoutesWithType.FeRoutes.find(e => e.path === route.path) ?? route
+  )
   ManualRoutesWithType.FeRoutes.forEach(route => {
     // 补充声明式路由新增的配置
     const found = combineRoutes.find(e => e.path === route.path)
@@ -23,6 +26,4 @@ if (ManualRoutesWithType.FeRoutes) {
   })
   Routes.FeRoutes = combineRoutes
 }
-export {
-  Routes
-}
+export { Routes }
