@@ -1,4 +1,4 @@
-import * as WebpackChain from 'webpack-chain'
+import WebpackChain from 'webpack-chain'
 import { getImageOutputPath } from '../parse'
 import { loadModuleFromFramework } from '../cwd'
 

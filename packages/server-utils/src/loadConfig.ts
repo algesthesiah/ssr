@@ -25,8 +25,8 @@ const loadConfig = (): IConfig => {
   const vue3ClientEntry = join(cwd, './node_modules/ssr-plugin-vue3/esm/entry/client-entry.js')
   const vueServerEntry = join(cwd, './node_modules/ssr-plugin-vue/esm/entry/server-entry.js')
   const vueClientEntry = join(cwd, './node_modules/ssr-plugin-vue/esm/entry/client-entry.js')
-  const reactServerEntry = join(cwd, './node_modules/ssr-plugin-react/esm/entry/server-entry.js')
-  const reactClientEntry = join(cwd, './node_modules/ssr-plugin-react/esm/entry/client-entry.js')
+  const reactServerEntry = join(cwd, './node_modules/cssr-plugin-react/es/entry/server-entry.js')
+  const reactClientEntry = join(cwd, './node_modules/cssr-plugin-react/es/entry/client-entry.js')
   const supportOptinalChaining = coerce(process.version)!.major >= 14
   const define = userConfig.define ?? {}
   userConfig.define && stringifyDefine(define)
@@ -35,7 +35,7 @@ const loadConfig = (): IConfig => {
     '@': getFeDir(),
     '~': getCwd(),
     '_build': join(getCwd(), './build'),
-    ...(framework === 'ssr-plugin-react'
+    ...(framework === 'cssr-plugin-react'
       ? {
           'react': loadModuleFromFramework('react'),
           'react-router': loadModuleFromFramework('react-router'),

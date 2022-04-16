@@ -1,43 +1,46 @@
-import * as fs from 'fs'
-import * as path from 'path'
+import fs from 'fs'
+import path from 'path'
 import { getCwd } from '../cwd'
 
-const contains = function contains (arr, val) {
+const contains = function contains(arr, val) {
   return arr && arr.indexOf(val) !== -1
 }
 
 const atPrefix = new RegExp('^@', 'g')
 
-const readDir = function readDir (dirName: string): string[] {
+const readDir = function readDir(dirName: string): string[] {
   if (!fs.existsSync(dirName)) {
     return []
   }
 
   try {
     // @ts-ignore
-    return fs.readdirSync(dirName).map(function (module) {
-      if (atPrefix.test(module)) {
-        // reset regexp
-        atPrefix.lastIndex = 0
-        try {
-          return fs.readdirSync(path.join(dirName, module)).map(function (scopedMod) {
-            return module + '/' + scopedMod
-          })
-        } catch (e) {
-          return [module]
+    return fs
+      .readdirSync(dirName)
+      .map(function (module) {
+        if (atPrefix.test(module)) {
+          // reset regexp
+          atPrefix.lastIndex = 0
+          try {
+            return fs.readdirSync(path.join(dirName, module)).map(function (scopedMod) {
+              return module + '/' + scopedMod
+            })
+          } catch (e) {
+            return [module]
+          }
         }
-      }
-      return module
-    }).reduce(function (prev, next) {
-      // @ts-ignore
-      return prev.concat(next)
-    }, [])
+        return module
+      })
+      .reduce(function (prev, next) {
+        // @ts-ignore
+        return prev.concat(next)
+      }, [])
   } catch (e) {
     return []
   }
 }
 
-const readFromPackageJson = function readFromPackageJson (options) {
+const readFromPackageJson = function readFromPackageJson(options) {
   if (typeof options !== 'object') {
     options = {}
   }
@@ -71,21 +74,19 @@ const readFromPackageJson = function readFromPackageJson (options) {
   return Object.keys(deps)
 }
 
-const containsPattern = function containsPattern (arr, val) {
-  return arr && arr.some(function (pattern) {
-    if (pattern instanceof RegExp) {
-      return pattern.test(val)
-    } else if (typeof pattern === 'function') {
-      return pattern(val)
-    } else {
-      return pattern === val
-    }
-  })
+const containsPattern = function containsPattern(arr, val) {
+  return (
+    arr &&
+    arr.some(function (pattern) {
+      if (pattern instanceof RegExp) {
+        return pattern.test(val)
+      } else if (typeof pattern === 'function') {
+        return pattern(val)
+      } else {
+        return pattern === val
+      }
+    })
+  )
 }
 
-export {
-  readFromPackageJson,
-  readDir,
-  containsPattern,
-  contains
-}
+export { readFromPackageJson, readDir, containsPattern, contains }

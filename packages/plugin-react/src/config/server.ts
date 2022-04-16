@@ -1,7 +1,7 @@
 import { join } from 'path'
 import { loadConfig, getLocalNodeModules, nodeExternals } from 'cssr-server-utils'
-import * as WebpackChain from 'webpack-chain'
-import * as webpack from 'webpack'
+import WebpackChain from 'webpack-chain'
+import webpack from 'webpack'
 import { getBaseConfig } from './base'
 
 const getServerWebpack = (chain: WebpackChain) => {

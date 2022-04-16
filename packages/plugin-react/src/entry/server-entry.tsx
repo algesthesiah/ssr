@@ -88,7 +88,7 @@ const serverRender = async (ctx: ISSRContext, config: IConfig): Promise<React.Re
       />
     ),
     isVite && isDev && (
-      <script type="module" src="/node_modules/ssr-plugin-react/esm/entry/client-entry.js" key="vite-react-entry" />
+      <script type="module" src="/node_modules/cssr-plugin-react/es/entry/client-entry.js" key="vite-react-entry" />
     ),
     ...jsOrder
       .map(js => manifest[js])

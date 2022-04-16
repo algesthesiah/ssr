@@ -193,7 +193,7 @@ const accessFileSync = (file: string) => {
 
 const copyReactContext = async () => {
   await promises.copyFile(
-    resolve(getCwd(), './node_modules/ssr-plugin-react/src/entry/create-context.ts'),
+    resolve(getCwd(), './node_modules/cssr-plugin-react/src/entry/create-context.ts'),
     resolve(getCwd(), './build/create-context.ts')
   )
 }

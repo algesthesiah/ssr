@@ -7,9 +7,9 @@ import {
   addImageChain,
   loadModuleFromFramework,
 } from 'cssr-server-utils'
-import * as WebpackChain from 'webpack-chain'
-import * as webpack from 'webpack'
-import type { IConfig } from 'cssr-types'
+import WebpackChain from 'webpack-chain'
+import webpack from 'webpack'
+import type { IConfig, Config } from 'cssr-types'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 
 export type Mode = 'development' | 'production'
@@ -115,13 +115,13 @@ const getBaseConfig = (chain: WebpackChain, isServer: boolean): IConfig => {
   addBabelLoader(babelModule, envOptions)
   addBabelLoader(babelForExtraModule, envOptions)
 
-  setStyle(chain, /\.css$/, {
+  setStyle(chain as Config, /\.css$/, {
     rule: 'css',
     isServer,
     importLoaders: 1,
   })
 
-  setStyle(chain, /\.less$/, {
+  setStyle(chain as Config, /\.less$/, {
     rule: 'less',
     loader: 'less-loader',
     isServer,
@@ -159,7 +159,7 @@ const getBaseConfig = (chain: WebpackChain, isServer: boolean): IConfig => {
       ...define?.base,
     },
   ])
-  chainBaseConfig(chain)
+  chainBaseConfig(chain as Config)
   return config
 }
 
