@@ -1,9 +1,10 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import { preloadComponent } from 'ssr-client-utils'
+import { preloadComponent } from 'cssr-client-utils'
 import { wrapComponent } from 'cssr-hoc-react'
-import { IWindow, LayoutProps, ReactESMFeRouteItem, ReactRoutesType } from 'cssr-types-react'
+import { IWindow } from 'cssr-types'
+import { LayoutProps, ReactESMFeRouteItem, ReactRoutesType } from 'cssr-types-react'
 import { Routes } from './create-router'
 import { AppContext } from './context'
 

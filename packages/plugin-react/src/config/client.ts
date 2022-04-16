@@ -1,12 +1,19 @@
 import { promises } from 'fs'
 import { resolve } from 'path'
-import { loadConfig, getCwd, cryptoAsyncChunkName, getOutputPublicPath, loadModuleFromFramework } from 'ssr-server-utils'
+import {
+  loadConfig,
+  getCwd,
+  cryptoAsyncChunkName,
+  getOutputPublicPath,
+  loadModuleFromFramework,
+} from 'cssr-server-utils'
 import * as WebpackChain from 'webpack-chain'
 import { getBaseConfig } from './base'
 
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin')
 const safePostCssParser = require('postcss-safe-parser')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+
 const generateAnalysis = Boolean(process.env.GENERATE_ANALYSIS)
 const loadModule = loadModuleFromFramework
 let asyncChunkMap: Record<string, string[]> = {}
@@ -16,12 +23,12 @@ const getClientWebpack = (chain: WebpackChain) => {
   const shouldUseSourceMap = isDev || Boolean(process.env.GENERATE_SOURCEMAP)
   const publicPath = getOutputPublicPath()
   getBaseConfig(chain, false)
-  chain.devtool(isDev ? 'cheap-module-source-map' : (shouldUseSourceMap ? 'source-map' : false))
-  chain.entry(chunkName)
+  chain.devtool(isDev ? 'cheap-module-source-map' : shouldUseSourceMap ? 'source-map' : false)
+  chain
+    .entry(chunkName)
     .add(require.resolve('../entry/client-entry'))
     .end()
-    .output
-    .path(getOutput().clientOutPut)
+    .output.path(getOutput().clientOutPut)
     .filename(useHash ? 'static/js/[name].[contenthash:8].js' : 'static/js/[name].js')
     .chunkFilename(useHash ? 'static/js/[name].[contenthash:8].chunk.js' : 'static/js/[name].chunk.js')
     .publicPath(publicPath)
@@ -30,82 +37,84 @@ const getClientWebpack = (chain: WebpackChain) => {
     .runtimeChunk(true)
     .splitChunks({
       chunks: 'all',
-      name (module: any, chunks: any, cacheGroupKey: string) {
+      name(module: any, chunks: any, cacheGroupKey: string) {
         return cryptoAsyncChunkName(chunks, asyncChunkMap)
       },
       cacheGroups: {
         vendors: {
           test: (module: any) => {
-            return module.resource &&
-              /\.js$/.test(module.resource) &&
-              module.resource.match('node_modules')
+            return module.resource && /\.js$/.test(module.resource) && module.resource.match('node_modules')
           },
-          name: 'vendor'
-        }
-      }
+          name: 'vendor',
+        },
+      },
     })
     .when(!isDev, optimization => {
-      optimization.minimizer('terser')
-        .use(loadModule('terser-webpack-plugin'), [{
+      optimization.minimizer('terser').use(loadModule('terser-webpack-plugin'), [
+        {
           terserOptions: {
             keep_fnames: true,
             parse: {
-              ecma: 8
+              ecma: 8,
             },
             compress: {
               ecma: 5,
               warnings: false,
               comparisons: false,
-              inline: 2
+              inline: 2,
             },
             mangle: {
-              safari10: true
+              safari10: true,
             },
             output: {
               ecma: 5,
               comments: false,
-              ascii_only: true
-            }
+              ascii_only: true,
+            },
           },
           extractComments: false,
           parallel: true,
           cache: true,
-          sourceMap: shouldUseSourceMap
-        }])
-      optimization.minimizer('optimize-css').use(loadModule('optimize-css-assets-webpack-plugin'), [{
-        cssProcessorOptions: {
-          parser: safePostCssParser,
-          map: shouldUseSourceMap ? {
-            inline: false,
-            annotation: true
-          } : false
-        }
-      }])
+          sourceMap: shouldUseSourceMap,
+        },
+      ])
+      optimization.minimizer('optimize-css').use(loadModule('optimize-css-assets-webpack-plugin'), [
+        {
+          cssProcessorOptions: {
+            parser: safePostCssParser,
+            map: shouldUseSourceMap
+              ? {
+                  inline: false,
+                  annotation: true,
+                }
+              : false,
+          },
+        },
+      ])
     })
 
   chain.plugin('moduleNotFound').use(ModuleNotFoundPlugin, [cwd])
 
-  chain.plugin('manifest').use(loadModule('webpack-manifest-plugin'), [{
-    fileName: 'asset-manifest.json'
-  }])
+  chain.plugin('manifest').use(loadModule('webpack-manifest-plugin'), [
+    {
+      fileName: 'asset-manifest.json',
+    },
+  ])
 
   chain.when(generateAnalysis, chain => {
     chain.plugin('analyze').use(BundleAnalyzerPlugin)
   })
   chain.plugin('WriteAsyncManifest').use(
     class WriteAsyncChunkManifest {
-      apply (compiler: any) {
+      apply(compiler: any) {
         compiler.hooks.watchRun.tap('thisCompilation', async () => {
           // 每次构建前清空上一次的 chunk 信息
           asyncChunkMap = {}
         })
-        compiler.hooks.done.tapAsync(
-          'WriteAsyncChunkManifest',
-          async (params: any, callback: any) => {
-            await promises.writeFile(resolve(getCwd(), './build/asyncChunkMap.json'), JSON.stringify(asyncChunkMap))
-            callback()
-          }
-        )
+        compiler.hooks.done.tapAsync('WriteAsyncChunkManifest', async (params: any, callback: any) => {
+          await promises.writeFile(resolve(getCwd(), './build/asyncChunkMap.json'), JSON.stringify(asyncChunkMap))
+          callback()
+        })
       }
     }
   )
@@ -114,6 +123,4 @@ const getClientWebpack = (chain: WebpackChain) => {
   return chain.toConfig()
 }
 
-export {
-  getClientWebpack
-}
+export { getClientWebpack }

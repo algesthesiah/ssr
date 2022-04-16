@@ -1,8 +1,7 @@
-
 import { start } from './start'
 import { build } from './build'
 
-export function serverPlugin () {
+export function serverPlugin() {
   return {
     start,
     build,

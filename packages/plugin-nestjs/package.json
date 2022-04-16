@@ -1,15 +1,12 @@
 {
-  "name": "ssr-plugin-nestjs",
+  "name": "cssr-plugin-nestjs",
   "version": "1.0.0",
   "description": "plugin-nestjs for ssr",
-  "main": "./cjs/index.js",
-  "module": "./esm/index.js",
+  "main": "./lib/index.js",
+  "module": "./es/index.js",
   "sideEffects": false,
   "scripts": {
-    "build": "concurrently \"tsc -p ./tsconfig.cjs.json --inlineSourceMap false\" \" tsc -p ./tsconfig.esm.json --inlineSourceMap false\"",
-    "build:only": "concurrently \"tsc-transpile-only -p ./tsconfig.cjs.json --inlineSourceMap false\" \" tsc-transpile-only -p ./tsconfig.esm.json --inlineSourceMap false\"",
-    "watch": "concurrently \"tsc -w -p ./tsconfig.cjs.json \" \"tsc -w -p ./tsconfig.esm.json \"",
-    "watch:cjs": "tsc -w -p ./tsconfig.cjs.json"
+    "build": "rimraf es && rimraf lib && tsc -p ./tsconfig.json --sourceMap false"
   },
   "repository": {
     "type": "git",
@@ -28,12 +25,15 @@
   },
   "homepage": "https://github.com/algesthesiah/ssr#readme",
   "dependencies": {
-    "ora": "^4.0.4",
-    "rimraf": "^3.0.2",
-    "cssr-server-utils": "^1.0.0"
+    "cssr-server-utils": "^1.0.0",
+    "ora": "^4.0.4"
   },
   "peerDependencies": {
     "@nestjs/common": ">=8",
     "@nestjs/core": ">=8"
+  },
+  "devDependencies": {
+    "cssr-types": "workspace:^1.0.4",
+    "rimraf": "^3.0.2"
   }
 }

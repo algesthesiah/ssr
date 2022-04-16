@@ -22,7 +22,7 @@ const getPagesDir = () => {
 
 const writeRoutes = async (routes: string, name?: string) => {
   const cwd = getCwd()
-  await promises.writeFile(resolve(cwd, `./build/${name ?? 'ssr-declare-routes'}`), routes)
+  await promises.writeFile(resolve(cwd, `./build/${name ?? 'cssr-declare-routes'}`), routes)
 }
 
 const transformConfig = async () => {
@@ -64,7 +64,7 @@ const transformManualRoutes = async () => {
   const serializeCode = code.replace(/(import\([\s\S]*?,)/g, match => {
     return match.replace(/\s/g, '')
   })
-  await writeRoutes(serializeCode, 'ssr-manual-routes.js')
+  await writeRoutes(serializeCode, 'cssr-manual-routes.js')
 }
 
 const getUserConfig = (): UserConfig => {
@@ -135,7 +135,7 @@ const judgeFramework = () => {
   const cwd = getCwd()
   const packageJSON = require(resolve(cwd, './package.json'))
   if (packageJSON.dependencies.react || packageJSON.devDependencies.react) {
-    return 'ssr-plugin-react'
+    return 'cssr-plugin-react'
   } else if (packageJSON.dependencies.vue || packageJSON.devDependencies.vue) {
     const version = packageJSON.dependencies.vue || packageJSON.devDependencies.vue
     return coerce(version)!.major === 3 ? 'ssr-plugin-vue3' : 'ssr-plugin-vue'
@@ -150,7 +150,7 @@ const judgeServerFramework = () => {
   if (packageJSON.dependencies['@midwayjs/web'] || packageJSON.devDependencies['@midwayjs/web']) {
     return 'ssr-plugin-midway'
   } else {
-    return 'ssr-plugin-nestjs'
+    return 'cssr-plugin-nestjs'
   }
 }
 

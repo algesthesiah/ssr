@@ -9,6 +9,7 @@ import {
 } from 'cssr-server-utils'
 import * as WebpackChain from 'webpack-chain'
 import * as webpack from 'webpack'
+import type { IConfig } from 'cssr-types'
 
 export type Mode = 'development' | 'production'
 
@@ -56,7 +57,7 @@ const addBabelLoader = (chain: WebpackChain.Rule<WebpackChain.Module>, envOption
     })
     .end()
 }
-const getBaseConfig = (chain: WebpackChain, isServer: boolean) => {
+const getBaseConfig = (chain: WebpackChain, isServer: boolean): IConfig => {
   const config = loadConfig()
   const { moduleFileExtensions, useHash, isDev, chainBaseConfig, corejsOptions, babelExtraModule, alias, define } =
     config

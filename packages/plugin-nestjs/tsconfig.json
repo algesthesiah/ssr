@@ -4,7 +4,8 @@
     "suppressImplicitAnyIndexErrors": true,
     "noImplicitAny": false,
     "noImplicitThis": false,
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "outDir": "./lib"
   },
-  "include": ["src/**/*.ts", "src/**/*.ts"]
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
 }

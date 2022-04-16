@@ -118,6 +118,19 @@ importers:
       react: 17.0.2
       rimraf: 3.0.2
 
+  packages/plugin-nestjs:
+    specifiers:
+      cssr-server-utils: ^1.0.0
+      cssr-types: workspace:^1.0.4
+      ora: ^4.0.4
+      rimraf: ^3.0.2
+    dependencies:
+      cssr-server-utils: link:../server-utils
+      ora: 4.1.1
+    devDependencies:
+      cssr-types: link:../types
+      rimraf: 3.0.2
+
   packages/plugin-react:
     specifiers:
       '@babel/core': ^7.0.0
@@ -141,8 +154,9 @@ importers:
       css-hot-loader: ^1.4.4
       css-loader: ^5.2.7
       cssr-client-utils: ^1.0.0
-      cssr-hoc-react: ^1.0.0
+      cssr-hoc-react: workspace:^1.0.0
       cssr-server-utils: ^1.0.0
+      cssr-types: workspace:^1.0.4
       cssr-types-react: workspace:^1.0.0
       file-loader: ^6.2.0
       less: ^4.1.1
@@ -156,7 +170,10 @@ importers:
       postcss-modules: ^4.0.0
       postcss-preset-env: ^7.0.0
       postcss-safe-parser: ^6.0.0
+      react: ^18.0.0
       react-dev-utils: ^11.0.4
+      react-dom: ^17.0.0
+      react-router-dom: ^6.3.0
       rimraf: ^3.0.2
       rollup: ^2.55.1
       rollup-plugin-copy: ^3.4.0
@@ -205,7 +222,10 @@ importers:
       postcss-modules: 4.3.1_postcss@8.4.12
       postcss-preset-env: 7.4.3_postcss@8.4.12
       postcss-safe-parser: 6.0.0_postcss@8.4.12
+      react: 18.0.0
       react-dev-utils: 11.0.4
+      react-dom: 17.0.2_react@18.0.0
+      react-router-dom: 6.3.0_react-dom@17.0.2+react@18.0.0
       serialize-javascript: 6.0.0
       terser-webpack-plugin: 2.3.8_webpack@4.46.0
       url-loader: 4.1.1_file-loader@6.2.0+webpack@4.46.0
@@ -226,6 +246,7 @@ importers:
       '@types/react-dom': 17.0.15
       '@types/react-router-dom': 5.3.3
       '@types/webpack': 4.41.32
+      cssr-types: link:../types
       cssr-types-react: link:../types-react
       rimraf: 3.0.2
       rollup: 2.70.2
@@ -7591,6 +7612,12 @@ packages:
       tiny-warning: 1.0.3
       value-equal: 1.0.1
 
+  /history/5.3.0:
+    resolution: {integrity: sha512-ZqaKwjjrAYUYfLG+htGaIIZ4nioX2L70ZUMIFysS3xvBsSG4x/n1V6TXV3N8ZYNuFGlDirFg32T7B6WOUPDYcQ==}
+    dependencies:
+      '@babel/runtime': 7.17.9
+    dev: false
+
   /hmac-drbg/1.0.1:
     resolution: {integrity: sha1-0nRXAQJabHdabFRXk+1QL8DGSaE=}
     dependencies:
@@ -10885,6 +10912,17 @@ packages:
       scheduler: 0.20.2
     dev: false
 
+  /react-dom/17.0.2_react@18.0.0:
+    resolution: {integrity: sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==}
+    peerDependencies:
+      react: 17.0.2
+    dependencies:
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+      react: 18.0.0
+      scheduler: 0.20.2
+    dev: false
+
   /react-error-overlay/6.0.11:
     resolution: {integrity: sha512-/6UZ2qgEyH2aqzYZgQPxEnz33NJ2gNsnHA2o5+o4wW9bLM/JYQitNP9xPhsXwC08hMMovfGe/8retsdDsczPRg==}
     dev: false
@@ -10915,6 +10953,18 @@ packages:
       tiny-invariant: 1.2.0
       tiny-warning: 1.0.3
 
+  /react-router-dom/6.3.0_react-dom@17.0.2+react@18.0.0:
+    resolution: {integrity: sha512-uaJj7LKytRxZNQV8+RbzJWnJ8K2nPsOOEuX7aQstlMZKQT0164C+X2w6bnkqU3sjtLvpd5ojrezAyfZ1+0sStw==}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
+    dependencies:
+      history: 5.3.0
+      react: 18.0.0
+      react-dom: 17.0.2_react@18.0.0
+      react-router: 6.3.0_react@18.0.0
+    dev: false
+
   /react-router/5.2.1_react@17.0.2:
     resolution: {integrity: sha512-lIboRiOtDLFdg1VTemMwud9vRVuOCZmUIT/7lUoZiSpPODiiH1UQlfXy+vPLC/7IWdFYnhRwAyNqA/+I7wnvKQ==}
     peerDependencies:
@@ -10932,6 +10982,15 @@ packages:
       tiny-invariant: 1.2.0
       tiny-warning: 1.0.3
 
+  /react-router/6.3.0_react@18.0.0:
+    resolution: {integrity: sha512-7Wh1DzVQ+tlFjkeo+ujvjSqSJmkt1+8JO+T5xklPlgrh70y7ogx75ODRW0ThWhY7S+6yEDks8TYrtQe/aoboBQ==}
+    peerDependencies:
+      react: '>=16.8'
+    dependencies:
+      history: 5.3.0
+      react: 18.0.0
+    dev: false
+
   /react/17.0.2:
     resolution: {integrity: sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==}
     engines: {node: '>=0.10.0'}
@@ -10939,6 +10998,13 @@ packages:
       loose-envify: 1.4.0
       object-assign: 4.1.1
     dev: true
+
+  /react/18.0.0:
+    resolution: {integrity: sha512-x+VL6wbT4JRVPm7EGxXhZ8w8LTROaxPXOqhlGyVSrv0sB1jkyFGgXxJ8LVoPRLvPR6/CIZGFmfzqUa2NYeMr2A==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      loose-envify: 1.4.0
+    dev: false
 
   /read-pkg-up/7.0.1:
     resolution: {integrity: sha512-zK0TB7Xd6JpCLmlLmufqykGE+/TlOePD6qKClNW7hHDKFh/J7/7gCWGR7joEQEW1bKq3a3yUZSObOoWLFQ4ohg==}

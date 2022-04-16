@@ -1,11 +1,15 @@
-import { Argv } from "../../../types/yargs"
+import { Argv } from 'cssr-types'
 
-const getNormalizeArgv = (argv: Argv, options: {
-  singleDash?: string[]
-  doubleDash?: string[]
-}) => {
+const getNormalizeArgv = (
+  argv: Argv,
+  options: {
+    singleDash?: string[]
+    doubleDash?: string[]
+  }
+) => {
   const { singleDash, doubleDash } = options
   let normalizeArgv = ''
+  // eslint-disable-next-line guard-for-in
   for (const key in argv) {
     const val = argv[key]
     if (singleDash?.includes(key)) {
@@ -21,6 +25,4 @@ const getNormalizeArgv = (argv: Argv, options: {
   return normalizeArgv
 }
 
-export {
-  getNormalizeArgv
-}
+export { getNormalizeArgv }
