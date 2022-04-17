@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { Options, RuleSetCondition } from 'webpack'
-import * as Config from 'webpack-chain'
+import Config from 'webpack-chain'
 import type { RollupBabelInputPluginOptions } from '@rollup/plugin-babel'
 import { Argv } from './yargs'
 import { ISSRContext } from './ctx'

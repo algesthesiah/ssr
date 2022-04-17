@@ -1,6 +1,5 @@
 // 通过使用该 HOC 使得组件只在客户端进行渲染
-import * as React from 'react'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { SProps } from 'cssr-types-react'
 
 type FC = (props: SProps) => JSX.Element

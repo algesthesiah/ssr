@@ -1,5 +1,5 @@
 /* eslint-disable */
-import * as React from 'react'
+import  React from 'react'
 import { useContext, useEffect, useState } from 'react'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { IWindow } from 'cssr-types'

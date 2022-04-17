@@ -7,7 +7,7 @@ import {
   getOutputPublicPath,
   loadModuleFromFramework,
 } from 'cssr-server-utils'
-import * as WebpackChain from 'webpack-chain'
+import WebpackChain from 'webpack-chain'
 import { getBaseConfig } from './base'
 
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin')

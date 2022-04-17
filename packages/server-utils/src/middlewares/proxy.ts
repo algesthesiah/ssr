@@ -1,5 +1,5 @@
 import { createProxyMiddleware } from 'http-proxy-middleware'
-import * as koaConnect from 'koa2-connect'
+import koaConnect from 'koa2-connect'
 import { judgeFramework } from '../cwd'
 import { loadConfig } from '../loadConfig'
 

@@ -1,9 +1,9 @@
-import * as React from 'react'
+import React from 'react'
 import { StaticRouter } from 'react-router-dom'
 import { findRoute, getManifest, logGreen, normalizePath, addAsyncChunk } from 'cssr-server-utils'
 import { ISSRContext, IConfig, ReactRoutesType, ReactESMFeRouteItem } from 'cssr-types-react'
 // @ts-expect-error
-import * as serializeWrap from 'serialize-javascript'
+import serializeWrap from 'serialize-javascript'
 // @ts-expect-error
 import { STORE_CONTEXT as Context } from '_build/create-context'
 // @ts-expect-error

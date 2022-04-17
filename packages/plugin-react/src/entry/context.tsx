@@ -1,5 +1,4 @@
-import * as React from 'react'
-import { useReducer } from 'react'
+import React, { useReducer } from 'react'
 import { IProps, Action, ReactRoutesType } from 'cssr-types-react'
 import { IWindow } from 'cssr-types'
 // @ts-ignore

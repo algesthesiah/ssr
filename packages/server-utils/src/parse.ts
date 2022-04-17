@@ -194,7 +194,7 @@ const parseFeRoutes = async () => {
     const re = /"webpackChunkName":("(.+?)")/g
     routes = `
         // The file is provisional which will be overwrite when restart
-        ${store ? 'import * as store from "@/store/index.ts"' : ''}
+        ${store ? 'import store from "@/store/index.ts"' : ''}
         export const FeRoutes = ${JSON.stringify(arr)}
         export { default as Layout } from "${layoutPath}"
         export { default as App } from "${AppPath}"

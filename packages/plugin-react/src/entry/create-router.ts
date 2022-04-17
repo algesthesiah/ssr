@@ -1,8 +1,8 @@
 /* eslint-disable import/no-unresolved */
 // @ts-ignore
-import * as declareRoutes from '_build/ssr-declare-routes'
+import declareRoutes from '_build/ssr-declare-routes'
 // @ts-ignore
-import * as ManualRoutes from '_build/ssr-manual-routes'
+import ManualRoutes from '_build/ssr-manual-routes'
 import { ReactRoutesType } from 'cssr-types-react'
 
 const declareRoutesWithType = declareRoutes as ReactRoutesType
