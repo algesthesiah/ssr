@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Routes as Switch } from 'react-router-dom'
 import { preloadComponent } from 'cssr-client-utils'
 import { wrapComponent } from 'cssr-hoc-react'
 import { IWindow } from 'cssr-types'
@@ -35,9 +35,7 @@ const clientRender = async (): Promise<void> => {
                   component.fetch = fetch
                   component.layoutFetch = layoutFetch
                   const WrappedComponent = wrapComponent(component)
-                  return (
-                    <Route exact key={path} path={path} render={() => <WrappedComponent key={location.pathname} />} />
-                  )
+                  return <Route key={path} path={path} render={() => <WrappedComponent key={location.pathname} />} />
                 })
               }
             </Switch>
