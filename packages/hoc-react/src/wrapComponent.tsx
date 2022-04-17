@@ -1,14 +1,23 @@
 /* eslint-disable */
 import  React from 'react'
 import { useContext, useEffect, useState } from 'react'
-import { withRouter, RouteComponentProps } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { IWindow } from 'cssr-types'
 import { DynamicFC, StaticFC, Action, ReactESMFetch, ReactFetch } from 'cssr-types-react'
 // @ts-ignore
 import { STORE_CONTEXT } from '_build/create-context'
 
 declare const window: IWindow
+function withRouter(Component) {
+  function ComponentWithRouterProp(props) {
+    let location = useLocation()
+    let navigate = useNavigate()
+    let params = useParams()
+    return <Component {...props} router={{ location, navigate, params }} />
+  }
 
+  return ComponentWithRouterProp
+}
 let hasRender = false
 
 interface fetchType {
@@ -19,7 +28,7 @@ interface fetchType {
 const fetchAndDispatch = async (
   { fetch, layoutFetch }: fetchType,
   dispatch: React.Dispatch<Action>,
-  routerProps: RouteComponentProps,
+  routerProps: any,
   state: any
 ) => {
   let asyncLayoutData = {}

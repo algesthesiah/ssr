@@ -1,22 +1,6 @@
-import { RouteComponentProps } from 'react-router-dom'
-import type { Request, Response } from 'express'
-import type { RouterContext } from 'koa-router'
-import type { ICookies, SetOption } from 'cookies'
-import type { IConfig } from 'cssr-types'
+/* eslint-disable @typescript-eslint/ban-types */
+import { ISSRContext, ISSRNestContext, ISSRMidwayContext, IConfig } from 'cssr-types'
 import { Action } from './component'
-
-type IObject = Record<string, any>
-export interface ExpressContext {
-  request: Request
-  response: Response
-}
-type IKoaContext = Omit<RouterContext, 'cookies' | 'router' | '_matchedRoute' | '_matchedRouteName'> & {
-  cookies: Omit<Partial<ICookies>, 'set'> & {
-    set?: (name: string, value?: string | null, opts?: SetOption) => IKoaContext['cookies']
-  }
-}
-export type ISSRContext<T = IObject> = (ExpressContext | IKoaContext) & T
-export type ISSRNestContext<T = IObject> = ExpressContext & T
 
 export interface LayoutProps {
   ctx?: ISSRContext
@@ -39,17 +23,23 @@ export interface ProvisionalFeRouteItem {
 
 export interface Params<T, U> {
   ctx?: ISSRContext<T>
-  routerProps?: RouteComponentProps<U>
+  routerProps?: U
+  state?: any
+}
+export interface ParamsMidway<T, U> {
+  ctx?: ISSRMidwayContext<T>
+  routerProps?: U
   state?: any
 }
 export interface ParamsNest<T, U> {
   ctx?: ISSRNestContext<T>
-  routerProps?: RouteComponentProps<U>
+  routerProps?: U
   state?: any
 }
 
-export type ReactFetch<T = IObject, U = IObject> = (params: Params<T, U>) => Promise<any>
-export type ReactNestFetch<T = IObject, U = IObject> = (params: ParamsNest<T, U>) => Promise<any>
+export type ReactFetch<T = {}, U = {}> = (params: Params<T, U>) => Promise<any>
+export type ReactMidwayFetch<T = {}, U = {}> = (params: ParamsMidway<T, U>) => Promise<any>
+export type ReactNestFetch<T = {}, U = {}> = (params: ParamsNest<T, U>) => Promise<any>
 
 export type ReactESMFetch = () => Promise<{
   default: ReactFetch
@@ -57,12 +47,12 @@ export type ReactESMFetch = () => Promise<{
 
 export type ESMLayout = () => Promise<React.FC<LayoutProps>>
 
-export interface StaticFC<T = IObject> extends React.FC<T> {
+export interface StaticFC<T = {}> extends React.FC<T> {
   fetch?: ReactESMFetch
   layoutFetch?: ReactFetch
 }
 
-export interface DynamicFC<T = IObject> extends React.FC<T> {
+export interface DynamicFC<T = {}> extends React.FC<T> {
   (): Promise<{
     default: StaticFC<T>
   }>
@@ -71,10 +61,17 @@ export interface DynamicFC<T = IObject> extends React.FC<T> {
   layoutFetch?: ReactFetch
 }
 
-export type ReactESMFeRouteItem<T = IObject, U = IObject> = {
+export type ReactESMFeRouteItem<T = {}, U = {}> = {
   path: string
   fetch?: ReactESMFetch
   component: DynamicFC<T>
+  webpackChunkName: string
+} & U
+
+export type ReactESMPreloadFeRouteItem<T = {}, U = {}> = {
+  path: string
+  fetch?: ReactESMFetch
+  component: DynamicFC<T> | StaticFC<T>
   webpackChunkName: string
 } & U
 

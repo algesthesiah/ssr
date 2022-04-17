@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { ReactChild } from 'react'
-import { RouteComponentProps } from 'react-router-dom'
 
 type IProps<T = {}> = T & {
   children: ReactChild
 }
 
-type SProps<T = {}> = T & RouteComponentProps
+type SProps<T = {}> = T
 
 interface Action {
   type: string
