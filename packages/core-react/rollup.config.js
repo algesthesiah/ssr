@@ -20,7 +20,7 @@ const config = [
         dir: 'es',
       },
     ],
-    // external: [id => id.includes('@babel/runtime')],
+    external: [id => id.includes('@babel/runtime')],
     plugins: [
       nodeResolve(),
       commonjs(),
