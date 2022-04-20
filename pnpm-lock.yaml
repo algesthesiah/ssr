@@ -278,15 +278,15 @@ importers:
       '@types/react': ^17.0.0
       '@types/react-dom': ^17.0.0
       '@types/react-router-dom': ^5.1.6
-      cssr-types: workspace:^1.0.3
+      cssr-types: workspace:^1.0.4
       react: ^17.0.1
       react-router-dom: ^6.3.0
     dependencies:
       '@types/react': 17.0.44
       '@types/react-dom': 17.0.15
       '@types/react-router-dom': 5.3.3
-    devDependencies:
       cssr-types: link:../types
+    devDependencies:
       react: 17.0.2
       react-router-dom: 6.3.0_react@17.0.2
 
