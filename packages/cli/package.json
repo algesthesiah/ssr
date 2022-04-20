@@ -11,6 +11,10 @@
   "bin": {
     "cssr": "./lib/cli.js"
   },
+  "files": [
+    "bin",
+    "package.json"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/algesthesiah/cssr.git"

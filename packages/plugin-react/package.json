@@ -19,6 +19,11 @@
     "react",
     "vue"
   ],
+  "files": [
+    "es",
+    "lib",
+    "package.json"
+  ],
   "author": "algesthesiah",
   "license": "MIT",
   "bugs": {

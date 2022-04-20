@@ -27,16 +27,21 @@
   "engines": {
     "node": ">=16.14.2"
   },
+  "files": [
+    "es",
+    "lib",
+    "package.json"
+  ],
   "homepage": "https://github.com/algesthesiah/cssr#readme",
   "dependencies": {
     "cssr-plugin-react": "workspace:^1.0.0",
     "cssr-server-utils": "workspace:^1.0.2",
     "cssr-types": "workspace:^1.0.3",
     "react-dom": "^17.0.0",
-    "serialize-javascript": "^6.0.0"
+    "serialize-javascript": "^6.0.0",
+    "vite": "^2.7.0"
   },
   "devDependencies": {
-    "@types/react-dom": "^17.0.0",
-    "vite": "^2.7.0"
+    "@types/react-dom": "^17.0.0"
   }
 }

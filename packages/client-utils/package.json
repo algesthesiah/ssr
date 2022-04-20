@@ -8,6 +8,11 @@
   "scripts": {
     "build": "rimraf es && rimraf lib && rollup -c"
   },
+  "files": [
+    "es",
+    "lib",
+    "package.json"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/algesthesiah/cssr.git"

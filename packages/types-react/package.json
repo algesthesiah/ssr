@@ -23,6 +23,11 @@
   "bugs": {
     "url": "https://github.com/algesthesiah/cssr/issues"
   },
+  "files": [
+    "es",
+    "lib",
+    "package.json"
+  ],
   "homepage": "https://github.com/algesthesiah/cssr#readme",
   "dependencies": {
     "@types/react": "^17.0.0",

@@ -35,5 +35,10 @@
     "webpack": "^4.42.1",
     "webpack-chain": "^6.4.0",
     "yargs": "^17.4.1"
-  }
+  },
+  "files": [
+    "es",
+    "lib",
+    "package.json"
+  ]
 }

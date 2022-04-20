@@ -18,6 +18,11 @@
     "ssr",
     "react"
   ],
+  "files": [
+    "es",
+    "lib",
+    "package.json"
+  ],
   "author": "algesthesiah",
   "license": "MIT",
   "bugs": {
