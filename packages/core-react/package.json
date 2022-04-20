@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/algesthesiah/cssr#readme",
   "dependencies": {
+    "cssr-plugin-react": "workspace:^1.0.0",
     "cssr-server-utils": "workspace:^1.0.2",
     "cssr-types": "workspace:^1.0.3",
     "react-dom": "^17.0.0",

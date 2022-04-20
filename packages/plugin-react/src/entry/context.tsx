@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useReducer } from 'react'
 import { IProps, Action, ReactRoutesType } from 'cssr-types-react'
 import { IWindow } from 'cssr-types'

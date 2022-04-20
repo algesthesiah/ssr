@@ -1,20 +1,37 @@
 import { build, UserConfig } from 'vite'
-import { loadConfig, chunkNamePlugin, rollupOutputOptions, manifestPlugin, commonConfig, asyncOptimizeChunkPlugin } from 'ssr-server-utils'
+import {
+  loadConfig,
+  chunkNamePlugin,
+  rollupOutputOptions,
+  manifestPlugin,
+  commonConfig,
+  asyncOptimizeChunkPlugin,
+} from 'cssr-server-utils'
 import react from '@vitejs/plugin-react'
-import styleImport, { AndDesignVueResolve, VantResolve, ElementPlusResolve, NutuiResolve, AntdResolve } from 'vite-plugin-style-import'
+import styleImport, {
+  AndDesignVueResolve,
+  VantResolve,
+  ElementPlusResolve,
+  NutuiResolve,
+  AntdResolve,
+} from 'vite-plugin-style-import'
 
-const { getOutput, prefix, reactServerEntry, reactClientEntry, viteConfig, supportOptinalChaining, isDev, define, babelOptions } = loadConfig()
+const {
+  getOutput,
+  prefix,
+  reactServerEntry,
+  reactClientEntry,
+  viteConfig,
+  supportOptinalChaining,
+  isDev,
+  define,
+  babelOptions,
+} = loadConfig()
 
 const { clientOutPut, serverOutPut } = getOutput()
 const styleImportConfig = {
   include: ['**/*.vue', '**/*.ts', '**/*.js', '**/*.tsx', '**/*.jsx', /chunkName/],
-  resolves: [
-    AndDesignVueResolve(),
-    VantResolve(),
-    ElementPlusResolve(),
-    NutuiResolve(),
-    AntdResolve()
-  ]
+  resolves: [AndDesignVueResolve(), VantResolve(), ElementPlusResolve(), NutuiResolve(), AntdResolve()],
 }
 const serverConfig: UserConfig = {
   ...commonConfig(),
@@ -25,17 +42,16 @@ const serverConfig: UserConfig = {
       babel: {
         ...babelOptions,
         plugins: [
-          ...babelOptions?.plugins ?? [],
-          ...!supportOptinalChaining ? [
-            '@babel/plugin-proposal-optional-chaining',
-            '@babel/plugin-proposal-nullish-coalescing-operator'
-          ] : []
-        ]
-      }
+          ...(babelOptions?.plugins ?? []),
+          ...(!supportOptinalChaining
+            ? ['@babel/plugin-proposal-optional-chaining', '@babel/plugin-proposal-nullish-coalescing-operator']
+            : []),
+        ],
+      },
     }),
     viteConfig?.()?.common?.extraPlugin,
     viteConfig?.()?.server?.extraPlugin,
-    styleImport(styleImportConfig)
+    styleImport(styleImportConfig),
   ],
   build: {
     ssr: reactServerEntry,
@@ -43,32 +59,32 @@ const serverConfig: UserConfig = {
     rollupOptions: {
       input: isDev ? reactClientEntry : reactServerEntry, // setting prebundle list by client-entry in dev
       output: {
-        entryFileNames: 'Page.server.js'
-      }
-    }
+        entryFileNames: 'Page.server.js',
+      },
+    },
   },
   define: {
     __isBrowser__: false,
     ...define?.server,
-    ...define?.base
-  }
+    ...define?.base,
+  },
 }
 
 const clientConfig: UserConfig = {
   ...commonConfig(),
   base: isDev ? '/' : prefix,
   esbuild: {
-    keepNames: true
+    keepNames: true,
   },
   plugins: [
     react({
       ...viteConfig?.()?.client?.defaultPluginOptions,
       jsxRuntime: 'classic',
-      ...babelOptions
+      ...babelOptions,
     }),
     viteConfig?.()?.common?.extraPlugin,
     viteConfig?.()?.client?.extraPlugin,
-    styleImport(styleImportConfig)
+    styleImport(styleImportConfig),
   ],
   build: {
     ssrManifest: true,
@@ -76,14 +92,14 @@ const clientConfig: UserConfig = {
     rollupOptions: {
       input: reactClientEntry,
       output: rollupOutputOptions,
-      plugins: [chunkNamePlugin(), asyncOptimizeChunkPlugin(), manifestPlugin()]
-    }
+      plugins: [chunkNamePlugin(), asyncOptimizeChunkPlugin(), manifestPlugin()],
+    },
   },
   define: {
     __isBrowser__: true,
     ...define?.client,
-    ...define?.base
-  }
+    ...define?.base,
+  },
 }
 const viteStart = async () => {
   //
@@ -93,9 +109,4 @@ const viteBuild = async () => {
   await build({ ...serverConfig, mode: 'production' })
 }
 
-export {
-  viteBuild,
-  viteStart,
-  serverConfig,
-  clientConfig
-}
+export { viteBuild, viteStart, serverConfig, clientConfig }

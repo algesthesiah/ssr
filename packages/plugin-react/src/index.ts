@@ -1,8 +1,8 @@
-import { loadConfig } from 'ssr-server-utils'
+import { loadConfig } from 'cssr-server-utils'
 
 const { isVite } = loadConfig()
 
-export function clientPlugin () {
+export function clientPlugin() {
   return {
     name: 'plugin-react',
     start: async () => {
@@ -22,7 +22,7 @@ export function clientPlugin () {
         const { webpackBuild } = await import('./tools/webpack')
         await webpackBuild()
       }
-    }
+    },
   }
 }
 

@@ -1,17 +1,17 @@
+/* eslint-disable */
 import React from 'react'
 import { StaticRouter } from 'react-router-dom/server'
 import { findRoute, getManifest, logGreen, normalizePath, addAsyncChunk } from 'cssr-server-utils'
 import { ISSRContext, IConfig, ReactRoutesType, ReactESMFeRouteItem } from 'cssr-types-react'
-// @ts-expect-error
 import serializeWrap from 'serialize-javascript'
-// @ts-expect-error
+// @ts-ignore
 import { STORE_CONTEXT as Context } from '_build/create-context'
-// @ts-expect-error
+// @ts-ignore
 import Layout from '@/components/layout/index.tsx'
 import { Routes } from './create-router'
 
 const { FeRoutes, layoutFetch, PrefixRouterBase, state } = Routes as ReactRoutesType
-const serialize = serializeWrap.default || serializeWrap
+const serialize = serializeWrap || serializeWrap
 
 const serverRender = async (ctx: ISSRContext, config: IConfig): Promise<React.ReactElement> => {
   const { cssOrder, jsOrder, dynamic, mode, parallelFetch, disableClientRender, prefix, isVite, isDev, clientPrefix } =

@@ -1,5 +1,5 @@
 import webpack from 'webpack'
-import { loadConfig } from 'ssr-server-utils'
+import { loadConfig } from 'cssr-server-utils'
 import { webpackPromisify } from './utils/promisify'
 
 const startServerBuild = async (webpackConfig: webpack.Configuration) => {

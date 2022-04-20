@@ -35,7 +35,7 @@ const clientRender = async (): Promise<void> => {
                   component.fetch = fetch
                   component.layoutFetch = layoutFetch
                   const WrappedComponent = wrapComponent(component)
-                  return <Route key={path} path={path} render={() => <WrappedComponent key={location.pathname} />} />
+                  return <Route key={path} path={path} element={() => <WrappedComponent key={location.pathname} />} />
                 })
               }
             </Switch>

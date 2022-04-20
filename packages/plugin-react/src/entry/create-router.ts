@@ -1,4 +1,4 @@
-/* eslint-disable import/no-unresolved */
+/* eslint-disable */
 // @ts-ignore
 import declareRoutes from '_build/ssr-declare-routes'
 // @ts-ignore
