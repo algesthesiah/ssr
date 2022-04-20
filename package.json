@@ -1,11 +1,6 @@
 {
   "private": true,
   "scripts": {
-    "bootstrap": "npm i && npm run build:only && npm run link",
-    "clean": "node scripts/scripts.js --clean",
-    "dev": "lerna run watch --stream --parallel",
-    "build": "lerna run build --stream --parallel",
-    "build:only": "lerna run build:only --stream --parallel",
     "example:nestjs:react:prod": "cd example/nestjs-react-ssr && npm run prod",
     "example:nestjs:react:prod:vite": "cd example/nestjs-react-ssr && npm run prod:vite",
     "example:nestjs:react": "cd example/nestjs-react-ssr && npm start",
