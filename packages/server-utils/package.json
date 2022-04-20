@@ -7,7 +7,7 @@
   "types": "./lib/index.d.ts",
   "sideEffects": false,
   "scripts": {
-    "build": "rimraf es && rimraf lib && tsc -p ./tsconfig.json --sourceMap false"
+    "build": "rimraf es && rimraf lib && rollup -c"
   },
   "repository": {
     "type": "git",
@@ -40,6 +40,7 @@
     "koa2-connect": "^1.0.2",
     "magic-string": "^0.25.7",
     "path-to-regexp": "^6.2.0",
+    "rollup": "^2.70.2",
     "semver": "^7.3.5",
     "shelljs": "^0.8.3"
   }

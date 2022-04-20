@@ -1,10 +1,9 @@
 /* eslint-disable */
-import  React from 'react'
-import { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { IWindow } from 'cssr-types'
 import { DynamicFC, StaticFC, Action, ReactESMFetch, ReactFetch } from 'cssr-types-react'
-// @ts-ignore
+// @ts-expect-error
 import { STORE_CONTEXT } from '_build/create-context'
 
 declare const window: IWindow
@@ -52,7 +51,7 @@ const fetchAndDispatch = async (
 function wrapComponent(WrappedComponent: DynamicFC | StaticFC) {
   return withRouter(props => {
     const [ready, setReady] = useState(WrappedComponent.name !== 'dynamicComponent')
-    const { state, dispatch } = useContext(STORE_CONTEXT)
+    const { state, dispatch } = useContext(STORE_CONTEXT as any)
     const didMount = async () => {
       if (hasRender || !window.__USE_SSR__) {
         // ssr 情况下只有路由切换的时候才需要调用 fetch

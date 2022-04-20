@@ -1,12 +1,12 @@
 {
   "name": "cssr-cli",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "cli for react ssr deploy on serverless or tradtional web server",
   "main": "./lib/index.js",
   "module": "./es/index.js",
   "sideEffects": false,
   "scripts": {
-    "build": "rimraf es && rimraf lib && tsc -p ./tsconfig.json --sourceMap false"
+    "build": "rimraf bin && rollup -c"
   },
   "bin": {
     "cssr": "./lib/cli.js"
@@ -30,7 +30,6 @@
   "homepage": "https://github.com/algesthesiah/cssr#readme",
   "dependencies": {
     "cssr-server-utils": "workspace:^1.0.2",
-    "esbuild": "^0.13.14",
     "ora": "^4.0.4",
     "shelljs": "^0.8.3",
     "yargs": "^13.2.4"
@@ -41,7 +40,6 @@
   "devDependencies": {
     "@types/shelljs": "^0.8.7",
     "@types/yargs": "^13.0.0",
-    "concurrently": "^5.1.0",
     "cssr-types": "workspace:^1.0.3"
   }
 }

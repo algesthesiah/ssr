@@ -6,7 +6,7 @@
   "module": "./es/index.js",
   "sideEffects": false,
   "scripts": {
-    "build": "rimraf es && rimraf lib && tsc -p ./tsconfig.json --sourceMap false"
+    "build": "rimraf es && rimraf lib && rollup -c"
   },
   "repository": {
     "type": "git",
@@ -28,12 +28,7 @@
     "cssr-server-utils": "^1.0.0",
     "ora": "^4.0.4"
   },
-  "peerDependencies": {
-    "@nestjs/common": ">=8",
-    "@nestjs/core": ">=8"
-  },
   "devDependencies": {
-    "cssr-types": "workspace:^1.0.4",
-    "rimraf": "^3.0.2"
+    "cssr-types": "workspace:^1.0.4"
   }
 }

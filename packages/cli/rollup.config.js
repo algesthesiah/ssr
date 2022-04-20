@@ -3,25 +3,22 @@ import commonjs from '@rollup/plugin-commonjs'
 import { terser } from 'rollup-plugin-terser'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import postcss from 'rollup-plugin-postcss'
-import babel, { getBabelOutputPlugin } from '@rollup/plugin-babel'
+import babel from '@rollup/plugin-babel'
 import autoExternal from 'rollup-plugin-auto-external'
+import { preserveShebangs } from 'rollup-plugin-preserve-shebangs'
 
 const config = [
   {
-    input: './src/index.ts',
+    input: './src/cli.ts',
     output: [
       {
         format: 'cjs',
-        dir: 'lib',
-      },
-      {
-        format: 'es',
-        plugins: [getBabelOutputPlugin({ presets: ['@babel/preset-env'] })],
-        dir: 'es',
+        dir: 'bin',
       },
     ],
     external: [id => id.includes('@babel/runtime')],
     plugins: [
+      preserveShebangs(),
       nodeResolve(),
       commonjs(),
       autoExternal(),

@@ -11,7 +11,7 @@ const config = [
     input: './src/index.ts',
     output: [
       {
-        format: 'umd',
+        format: 'cjs',
         dir: 'lib',
         name: 'cssr-types',
       },
@@ -21,6 +21,7 @@ const config = [
         dir: 'es',
       },
     ],
+    external: [id => id.includes('@babel/runtime')],
     plugins: [
       nodeResolve(),
       commonjs(),

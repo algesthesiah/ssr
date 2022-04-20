@@ -21,6 +21,7 @@ const config = [
         dir: 'es',
       },
     ],
+    external: [id => id.includes('@babel/runtime')],
     plugins: [
       nodeResolve(),
       json(),

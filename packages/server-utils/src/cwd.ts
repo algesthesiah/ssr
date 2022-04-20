@@ -9,7 +9,7 @@ import type { UserConfig } from 'cssr-types'
 
 
 const getCwd = () => {
-  return resolve(process.cwd(), process.env.APP_ROOT ?? '')
+ return resolve(process.cwd(), process.env.APP_ROOT ?? '')
 }
 
 const getFeDir = () => {

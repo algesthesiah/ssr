@@ -21,10 +21,10 @@ const loadConfig = (): IConfig => {
   const stream = false
   const isVite = process.env.BUILD_TOOL === 'vite' || accessFileSync(join(cwd, './build/originAsyncChunkMap.json'))
   const isCI = !!process.env.CI_TEST
-  const vue3ServerEntry = join(cwd, './node_modules/ssr-plugin-vue3/esm/entry/server-entry.js')
-  const vue3ClientEntry = join(cwd, './node_modules/ssr-plugin-vue3/esm/entry/client-entry.js')
-  const vueServerEntry = join(cwd, './node_modules/ssr-plugin-vue/esm/entry/server-entry.js')
-  const vueClientEntry = join(cwd, './node_modules/ssr-plugin-vue/esm/entry/client-entry.js')
+  const vue3ServerEntry = join(cwd, './node_modules/ssr-plugin-vue3/es/entry/server-entry.js')
+  const vue3ClientEntry = join(cwd, './node_modules/ssr-plugin-vue3/es/entry/client-entry.js')
+  const vueServerEntry = join(cwd, './node_modules/ssr-plugin-vue/es/entry/server-entry.js')
+  const vueClientEntry = join(cwd, './node_modules/ssr-plugin-vue/es/entry/client-entry.js')
   const reactServerEntry = join(cwd, './node_modules/cssr-plugin-react/es/entry/server-entry.js')
   const reactClientEntry = join(cwd, './node_modules/cssr-plugin-react/es/entry/client-entry.js')
   const supportOptinalChaining = coerce(process.version)!.major >= 14

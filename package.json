@@ -22,6 +22,8 @@
   },
   "homepage": "https://github.com/algesthesiah/cssr#readme",
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
     "@commitlint/cli": "^16.2.3",
     "@commitlint/config-conventional": "^16.2.1",
     "@rollup/plugin-babel": "^5.3.1",
@@ -40,9 +42,5 @@
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": "eslint --fix"
-  },
-  "dependencies": {
-    "@babel/plugin-transform-runtime": "^7.9.6",
-    "@babel/preset-env": "^7.5.5"
   }
 }

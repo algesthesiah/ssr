@@ -6,7 +6,7 @@
   "module": "./es/index.js",
   "sideEffects": false,
   "scripts": {
-    "build": "rimraf es && rimraf lib && tsc -p ./tsconfig.json --sourceMap false"
+    "build": "rimraf es && rimraf lib && rollup -c"
   },
   "repository": {
     "type": "git",

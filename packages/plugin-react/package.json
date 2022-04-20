@@ -2,8 +2,8 @@
   "name": "cssr-plugin-react",
   "version": "1.0.0",
   "description": "plugin-react for cssr",
-  "main": "./cjs/index.js",
-  "module": "./esm/index.js",
+  "main": "./lib/index.js",
+  "module": "./es/index.js",
   "sideEffects": false,
   "scripts": {
     "build": "rimraf es && rimraf lib && rollup -c"
